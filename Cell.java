@@ -52,6 +52,9 @@ public class Cell implements CellInterface
 	
 	public void setVisited(Boolean value) {
 		this.visited = value;
+		if (this.visited) {
+			this.type = "visited";
+		}
 	}
 
 	public Boolean getN() {

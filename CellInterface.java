@@ -1,7 +1,7 @@
 public interface CellInterface
 {
 	/**
-	 * Returns if the cell has been visited yet
+	 * @return if the cell has been visited yet
 	 */
 	public Boolean getVisited();
 	
@@ -11,7 +11,7 @@ public interface CellInterface
 	public void setVisited(Boolean value);
 	
 	/**
-	 * Gets the values of all of the walls surrounding the current cell
+	 * @return the values of all of the walls surrounding the current cell
 	 * in the order N, E, S, W
 	 */
 	public Boolean[] getWalls();

@@ -35,7 +35,7 @@ class MazeCanvas extends JPanel implements Runnable
 		Color[] colors = { Color.black, Color.blue, Color.red, Color.green, Color.orange, Color.MAGENTA };
 		
 		Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(10));
+		g2.setStroke(new BasicStroke(2));
 		
 		width = getSize().width;
 		height = getSize().height;
@@ -161,25 +161,45 @@ public class DrawMaze extends JFrame
 		
 	}
 	
-	private static void CSVMazeDemo() {
+	private static void HTMLMazeDemo() {
 
-		Maze maze = new Maze(9, 6);
 		
 		try
 		{
-			Maze realMaze = new Maze("SE_CSV.csv");
+			Maze realMaze = new Maze("maze3.html");
+			Maze maze = new Maze(realMaze.width, realMaze.height);
 			new DrawMaze(maze).setVisible(true);
 			new DrawMaze(realMaze).setVisible(true);
+			delay(5000);
 			exploreMaze(maze, realMaze);
 		}
 		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
+		delay(10000);
+		System.exit(0);
+	}
+	
+	private static void CSVMazeDemo() {
+
 		
 		
-		
-		
+		try
+		{
+			Maze realMaze = new Maze("SE_CSV.csv");
+			Maze maze = new Maze(realMaze.width, realMaze.height);
+			new DrawMaze(maze).setVisible(true);
+			new DrawMaze(realMaze).setVisible(true);
+			delay(5000);
+			exploreMaze(maze, realMaze);
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		delay(10000);
+		System.exit(0);
 	}
 
 	private static void exploreMaze(Maze maze, Maze realMaze)
@@ -199,7 +219,7 @@ public class DrawMaze extends JFrame
 			maze.setCurrentWall("W", walls[3]);
 			if (maze.getCurrentCell().getN() == false) {
 				if (maze.getNorthCell().getVisited() == false) {
-					if (maze.getNorthCell().type.equals("planned") == false) {
+					if (maze.getNorthCell().type.equals("normal")) {
 						visitStack.addFirst(maze.getNorthCell().position);
 						maze.getNorthCell().type = "planned";
 					}
@@ -207,7 +227,7 @@ public class DrawMaze extends JFrame
 			}
 			if (maze.getCurrentCell().getE() == false) {
 				if (maze.getEastCell().getVisited() == false) {
-					if (maze.getEastCell().type.equals("planned") == false) {
+					if (maze.getEastCell().type.equals("normal")) {
 						visitStack.addFirst(maze.getEastCell().position);
 						maze.getEastCell().type = "planned";
 					}
@@ -215,7 +235,7 @@ public class DrawMaze extends JFrame
 			}
 			if (maze.getCurrentCell().getS() == false) {
 				if (maze.getSouthCell().getVisited() == false) {
-					if (maze.getSouthCell().type.equals("planned") == false) {
+					if (maze.getSouthCell().type.equals("normal")) {
 						visitStack.addFirst(maze.getSouthCell().position);
 						maze.getSouthCell().type = "planned";
 					}
@@ -223,7 +243,7 @@ public class DrawMaze extends JFrame
 			}
 			if (maze.getCurrentCell().getW() == false) {
 				if (maze.getWestCell().getVisited() == false) {
-					if (maze.getWestCell().type.equals("planned") == false) {
+					if (maze.getWestCell().type.equals("normal")) {
 						visitStack.addFirst(maze.getWestCell().position);
 						maze.getWestCell().type = "planned";
 					}
@@ -233,8 +253,17 @@ public class DrawMaze extends JFrame
 			if (visitStack.size() == 0) {
 				stillToVisit = false;
 			}
+			else {
+				System.out.println(visitStack.size()); 
+				if (visitStack.size() == 1) {
+					System.out.println("position");
+					System.out.println(visitStack.peekFirst()[0]);
+					System.out.println(visitStack.peekFirst()[1]);
+				}
+			}
 		}
 		
+		System.out.println("finished");
 		
 	}
 
@@ -248,7 +277,19 @@ public class DrawMaze extends JFrame
 	{
 		try
 		{
-			TimeUnit.MILLISECONDS.sleep(100);
+			TimeUnit.MILLISECONDS.sleep(1);
+		}
+		catch (InterruptedException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	private static void delay(int milliseconds)
+	{
+		try
+		{
+			TimeUnit.MILLISECONDS.sleep(milliseconds);
 		}
 		catch (InterruptedException e)
 		{
@@ -258,7 +299,7 @@ public class DrawMaze extends JFrame
 
 	public static void main(String[] a)
 	{
-		CSVMazeDemo();
+		HTMLMazeDemo();
 		
 	}
 }

@@ -26,7 +26,15 @@ import java.util.List;
 public class Maze
 {
 	public Cell[][] layout;
+	
+	/**
+	 * The actual width of the physical maze.
+	 */
 	public int width;
+	
+	/**
+	 * The actual height of the physical maze.
+	 */
 	public int height;
 	public RobotPos robotPos;
 	
@@ -44,34 +52,80 @@ public class Maze
 		setCurrentPosVisited();
 	}
 	
-	public Maze(String CSV_path) throws IOException {
-		String csv = readFile(CSV_path, Charset.defaultCharset());
-		String[] csvRows = csv.split("\n");
-		this.height = csvRows.length - 1;
-		System.out.println(height);
-		this.width = csvRows[0].split(",").length - 1;
-		System.out.println(width);
-		createMazeLayout(width,height);
-		this.robotPos = new RobotPos(1, this.height, this);
-		
-		Boolean S;
-		Boolean E;
-		for (int y = 0; y < height + 1; y++) {
-			String[] values = csvRows[y].split(",");
-			for (int x = 0; x < width + 1; x++) {
-				char[] SE = values[x].toCharArray();
-				if (SE[0] == 'T') {
-					S = true;
-				} else {
-					S = false;
+	/**
+	 * <p>
+	 * Allows a maze to be created from a CSV file containing in each cell:
+	 * </p>
+	 * <ul>
+	 * <li> TT for a wall on the south and east
+	 * <li> TF for a wall on just the south
+	 * <li> FT for a wall on just the east
+	 * <li> FF for no walls on south or east
+	 * </ul>
+	 * 
+	 * <p>
+	 * <strong>OR</strong> allows a maze to be created from a HTML file generated at https://xefer.com/maze-generator
+	 * </p>
+	 */
+	public Maze(String file_path) throws IOException {
+		String text = readFile(file_path, Charset.defaultCharset());
+		if (file_path.contains("csv")) {
+			String csv = text;
+			String[] csvRows = csv.split("\n");
+			this.height = csvRows.length - 1;
+			System.out.println(height);
+			this.width = csvRows[0].split(",").length - 1;
+			System.out.println(width);
+			createMazeLayout(width,height);
+			this.robotPos = new RobotPos(1, this.height, this);
+			
+			Boolean S;
+			Boolean E;
+			for (int y = 0; y < height + 1; y++) {
+				String[] values = csvRows[y].split(",");
+				for (int x = 0; x < width + 1; x++) {
+					char[] SE = values[x].toCharArray();
+					if (SE[0] == 'T') {
+						S = true;
+					} else {
+						S = false;
+					}
+					if (SE[1] == 'T') {
+						E = true;  
+					} else {
+						E = false;
+					}
+					this.layout[x][y].setS(S);
+					this.layout[x][y].setE(E);
 				}
-				if (SE[1] == 'T') {
-					E = true;  
-				} else {
-					E = false;
+			}
+		}
+		else if (file_path.contains("html")) {
+			String html = text;
+			String[] htmlRows = html.split("mrow");
+			this.height = htmlRows.length - 1;
+			this.width = htmlRows[1].split("cell").length - 1;
+			createMazeLayout(width,height);
+			this.robotPos = new RobotPos(1, this.height, this);
+			
+			Boolean S;
+			Boolean E;
+			for (int y = 1; y < height + 1; y++) {
+				String[] values = htmlRows[y].split("cell");
+				for (int x = 1; x < width + 1; x++) {
+					if (values[x].contains("nobottom")) {
+						S = false;
+					} else {
+						S = true;
+					}
+					if (values[x].contains("noright")) {
+						E = false;  
+					} else {
+						E = true;
+					}
+					this.layout[x][y].setS(S);
+					this.layout[x][y].setE(E);
 				}
-				this.layout[x][y].setS(S);
-				this.layout[x][y].setE(E);
 			}
 		}
 
@@ -86,6 +140,9 @@ public class Maze
 			  return new String(encoded, encoding);
 			}
 
+	/**
+	 * Populates the maze layout with empty cells.
+	 */
 	private void createMazeLayout(int width, int height)
 	{
 		this.width = width;
@@ -103,6 +160,7 @@ public class Maze
 			this.layout[width][y].setE(true);
 		}
 	}
+	
 	
 	private Cell[] CreateEdgeColumn() {
 		Cell[] column = new Cell[height + 1];
