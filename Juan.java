@@ -15,6 +15,8 @@ import lejos.utility.Delay;
 
 public class Juan extends IRSensor
 {
+	private String currentDirection = "N";
+	
 	public Juan(Port port)
 	{
 		super(port);
@@ -92,6 +94,30 @@ public class Juan extends IRSensor
 			Delay.msDelay(180);
 			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 4);
 		}
+	}
+
+	public void MoveNorth()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void MoveSouth()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void MoveEast()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void MoveWest()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

@@ -1,42 +1,47 @@
 
-public class RobotPos
+public class JuanPos extends RobotPos
 {
+
 	public int x;
 	public int y;
 	private Maze maze;
+	Juan juan;
 	
-	public RobotPos(int x, int y, Maze maze) {
-		this.x = x;
-		this.y = y;
-		this.maze = maze;
+	public JuanPos(int x, int y, Maze maze)
+	{
+		super(x, y, maze);
 	}
 	
-	public void setMaze(Maze maze) {
-		this.maze = maze;
+	public void setJuan(Juan juan) {
+		this.juan = juan;
 	}
-	
-	public void travelTo(int[] position) {
-		this.x = position[0];
-		this.y = position[1];
-	}
-	
+
+	@Override
 	public void MoveNorth() {
 		this.y = this.y - 1;
+		juan.MoveNorth();
 		maze.getCurrentCell().setVisited(true);
 	}
-	
+
+	@Override
 	public void MoveSouth() {
 		this.y = this.y + 1;
+		juan.MoveSouth();
 		maze.getCurrentCell().setVisited(true);
 	}
-	
+
+	@Override
 	public void MoveEast() {
 		this.x = this.x + 1;
+		juan.MoveEast();
 		maze.getCurrentCell().setVisited(true);
 	}
-	
+
+	@Override
 	public void MoveWest() {
 		this.x = this.x - 1;
+		juan.MoveWest();
 		maze.getCurrentCell().setVisited(true);
 	}
+
 }

@@ -1,5 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
+//import org.graphstream.graph.*;
 
 public class MazeExploration
 {
@@ -84,7 +85,7 @@ public class MazeExploration
 
 	private static void travelTo(int[] position, Maze maze)
 	{
-		maze.robotPos.x = position[0];
-		maze.robotPos.y = position[1];
+		maze.robotPos.travelTo(position);
+		
 	}
 }
