@@ -9,6 +9,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
+
 
 /**
  * <p>
@@ -213,5 +216,26 @@ public class Maze
 	
 	public Cell getWestCell() {
 		return layout[this.robotPos.x - 1][this.robotPos.y];
+	}
+	
+	public Graph getGraph() {
+		Graph graph = new SingleGraph("Maze Graph");
+		for (int x = 1; x <= this.width; x++) {
+			for (int y = 1; y <= this.height; y++) {
+				graph.addNode(layout[x][y].getCellPositionString());
+				if (layout[x][y].getN() != null) {
+					if (layout[x][y].getN() == false) {
+						graph.addEdge(layout[x][y].getCellPositionString() + "N", layout[x][y].getCellPositionString(), layout[x][y-1].getCellPositionString());
+					}
+				}
+				if (layout[x][y].getW() != null) {
+					if (layout[x][y].getW() == false) {
+						graph.addEdge(layout[x][y].getCellPositionString() + "W", layout[x][y].getCellPositionString(), layout[x-1][y].getCellPositionString());
+					}
+				}
+			}
+		}
+		
+		return graph;
 	}
 }

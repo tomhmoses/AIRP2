@@ -191,7 +191,7 @@ public class DrawMaze extends JFrame
 			Maze maze = new Maze(realMaze.width, realMaze.height);
 			new DrawMaze(maze).setVisible(true);
 			new DrawMaze(realMaze).setVisible(true);
-			delay(5000);
+			delay(1000);
 			new MazeExploration(maze, realMaze, 500);
 		}
 		catch (IOException e)

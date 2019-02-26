@@ -26,7 +26,7 @@ public class EdgeCell extends Cell
 	 */
 	public EdgeCell()
 	{
-		super(null, null, null);
+		super(null, null, new int[] {-1,-1});
 		this.NCell = null;
 		this.WCell = null;
 		this.EWall = true;

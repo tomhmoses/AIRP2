@@ -1,6 +1,9 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
-//import org.graphstream.graph.*;
+import org.graphstream.graph.*;
+import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.algorithm.AStar;
+import org.graphstream.algorithm.AStar.Costs;
 
 public class MazeExploration
 {
@@ -69,23 +72,109 @@ public class MazeExploration
 			if (visitStack.size() == 0) {
 				stillToVisit = false;
 			}
-			else {
-				System.out.println(visitStack.size()); 
-				if (visitStack.size() == 1) {
-					System.out.println("position");
-					System.out.println(visitStack.peekFirst()[0]);
-					System.out.println(visitStack.peekFirst()[1]);
-				}
-			}
 		}
 		
 		System.out.println("finished");
 		
 	}
+	
+	private static String myToString(int[] position) {
+		return "[" + Integer.toString(position[0]) + "," + Integer.toString(position[1]) + "]";
+	}
+	
+	private static int[] myToIntArr(String string) {
+		int[] position = new int[2];
+		string = string.substring(1, string.length()-1);
+		String[] posString = string.split(",");
+		//System.out.print("toIntArr: ");
+		//System.out.println(string);
+		position[0] = Integer.valueOf(posString[0]);
+		position[1] = Integer.valueOf(posString[1]);
+		return position;
+	}
 
-	private static void travelTo(int[] position, Maze maze)
+	private static void travelTo(int[] goalPos, Maze maze)
 	{
-		maze.robotPos.travelTo(position);
-		
+		int[] currentPos = maze.getCurrentCell().position;
+		Graph graph = maze.getGraph();
+		AStar astar = new AStar(graph);
+		//astar.setCosts(new Costs());
+		astar.compute(myToString(currentPos), myToString(goalPos));
+		Path path = astar.getShortestPath();
+		String[] directions = toDirectionArray(path);
+		for (int i = 0; i < directions.length; i++) {
+			System.out.println("Moving " + directions[i]);
+			if (directions[i] == "N") {
+				maze.robotPos.MoveNorth();
+			}
+			else if (directions[i] == "E") {
+				maze.robotPos.MoveEast();
+			}
+			else if (directions[i] == "S") {
+				maze.robotPos.MoveSouth();
+			}
+			else if (directions[i] == "W") {
+				maze.robotPos.MoveWest();
+			}
+			try
+			{
+				Thread.sleep(100);
+			}
+			catch (InterruptedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static String[] toDirectionArray(Path path)
+	{
+		String[] directions;
+		if (path.size() > 1) {
+			System.out.print("path: ");
+			System.out.println(path);
+			directions = new String[path.size()-1];
+			String pathStr = path.toString();
+			pathStr = pathStr.substring(1, pathStr.length()-1);
+			String[] nodeStrings = pathStr.split(", ");
+			Deque<int[]> posQueue = new ArrayDeque<>();
+			for (int i = 0; i < nodeStrings.length; i++) {
+				posQueue.addLast(myToIntArr(nodeStrings[i]));
+			}
+			int[] currentPos = posQueue.removeFirst();
+			int[] nextPos;
+			int counter = 0;
+			System.out.print("queue Size: ");
+			System.out.println(posQueue.size());
+			System.out.print("path after pop: ");
+			System.out.println(path);
+			while (posQueue.size() > 0) {
+				nextPos = posQueue.removeFirst();
+				System.out.print("current: ");
+				System.out.println(myToString(currentPos));
+				System.out.print("next: ");
+				System.out.println(myToString(nextPos));
+				if (nextPos[1] < currentPos[1]) {
+					directions[counter] = "N";
+				}
+				else if (nextPos[1] > currentPos[1]) {
+					directions[counter] = "S";
+				}
+				else if (nextPos[0] > currentPos[0]) {
+					directions[counter] = "E";
+				}
+				else if (nextPos[0] < currentPos[0]) {
+					directions[counter] = "W";
+				}
+				
+				counter += 1;
+				currentPos = nextPos;
+			}
+		}
+		else {
+			directions = new String[] {};
+			System.out.println("directions empty");
+		}
+		return directions;
 	}
 }

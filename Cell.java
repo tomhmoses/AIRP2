@@ -44,6 +44,10 @@ public class Cell implements CellInterface
 		this.SWall = null;
 		this.EWall = null;
 	}
+	
+	public String getCellPositionString() {
+		return "[" + Integer.toString(position[0]) + "," + Integer.toString(position[1]) + "]";
+	}
 
 	
 	public Boolean getVisited() {
