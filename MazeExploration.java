@@ -1,26 +1,27 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 import org.graphstream.graph.*;
-import org.graphstream.graph.implementations.SingleGraph;
 import org.graphstream.algorithm.AStar;
-import org.graphstream.algorithm.AStar.Costs;
 
 public class MazeExploration
 {
 	public MazeExploration(Maze maze, Maze realMaze) {
-		exploreMaze(maze, realMaze, 0);
+		maze.explorer.setMapMaze(realMaze);
+		exploreMaze(maze, 0);
 	}
 	
 	public MazeExploration(Maze maze, Maze realMaze, int delay) {
-		exploreMaze(maze, realMaze, delay);
+		maze.explorer.setMapMaze(realMaze);
+		exploreMaze(maze, delay);
 	}
 	
-	public static void exploreMaze(Maze maze, Maze realMaze, int delay)
+	
+	public static void exploreMaze(Maze maze, int delay)
 	{
 		Deque<int[]> visitStack = new ArrayDeque<>();
 		Boolean stillToVisit = true;
 		Boolean[] walls;
-		visitStack.addFirst(new int[] {maze.robotPos.x,maze.robotPos.y});
+		visitStack.addFirst(new int[] {maze.explorer.x,maze.explorer.y});
 		while (stillToVisit) {
 			try
 			{
@@ -32,7 +33,7 @@ public class MazeExploration
 			}
 			travelTo(visitStack.removeFirst(), maze);
 			maze.getCurrentCell().setVisited(true);
-			walls = realMaze.layout[maze.robotPos.x][maze.robotPos.y].getWalls();
+			walls = maze.explorer.getCurrentWalls();
 			maze.setCurrentWall("N", walls[0]);
 			maze.setCurrentWall("E", walls[1]);
 			maze.setCurrentWall("S", walls[2]);
@@ -69,9 +70,13 @@ public class MazeExploration
 					}
 				}
 			}
-			if (visitStack.size() == 0) {
+			if (visitStack.size() == 0 || maze.explorer.reachedGoal()) {
 				stillToVisit = false;
 			}
+		}
+		if (maze.explorer.reachedGoal()) {
+			maze.getCurrentCell().type = "goal";
+			travelTo(new int[] {1, maze.height}, maze);
 		}
 		
 		System.out.println("finished");
@@ -105,16 +110,16 @@ public class MazeExploration
 		for (int i = 0; i < directions.length; i++) {
 			System.out.println("Moving " + directions[i]);
 			if (directions[i] == "N") {
-				maze.robotPos.MoveNorth();
+				maze.explorer.MoveNorth();
 			}
 			else if (directions[i] == "E") {
-				maze.robotPos.MoveEast();
+				maze.explorer.MoveEast();
 			}
 			else if (directions[i] == "S") {
-				maze.robotPos.MoveSouth();
+				maze.explorer.MoveSouth();
 			}
 			else if (directions[i] == "W") {
-				maze.robotPos.MoveWest();
+				maze.explorer.MoveWest();
 			}
 			try
 			{

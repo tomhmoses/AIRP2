@@ -52,6 +52,7 @@ class MazeCanvas extends JPanel implements Runnable
 		Color pPink = new Color(241,203,255);
 		Color pBlue = new Color(201,201,255);
 		Color robotColor = new Color(76,76,255);
+		Color darkGrey = new Color(200,200,200);
 		for (int x = 0; x <= maze.width; x++) {
 			for (int y = 0; y <= maze.height; y++) {
 				cell = maze.layout[x][y];
@@ -60,11 +61,17 @@ class MazeCanvas extends JPanel implements Runnable
 				}
 				else
 				{
-					if (cell.visited) {
-						g.setColor(pGreen);
+					if (cell.type.equals("goal")) {
+						g.setColor(pRed);
+					}
+					else if (cell.type.equals("danger")) {
+						g.setColor(darkGrey);
 					}
 					else if (cell.type.equals("planned")) {
 						g.setColor(pBlue);
+					}
+					else if (cell.visited) {
+						g.setColor(pGreen);
 					}
 					else {
 						g.setColor(Color.white);
@@ -116,8 +123,8 @@ class MazeCanvas extends JPanel implements Runnable
 			
 			//draw robot
 			g.setColor(robotColor);
-			int x1 = (int) Math.round((maze.robotPos.x - 1 + 0.25)*cellWidth);
-			int y1 = (int) Math.round((maze.robotPos.y - 1 + 0.25)*cellHeight);
+			int x1 = (int) Math.round((maze.explorer.x - 1 + 0.25)*cellWidth);
+			int y1 = (int) Math.round((maze.explorer.y - 1 + 0.25)*cellHeight);
 			g.fillOval(x1, y1, cellWidth/2, cellHeight/2);
 		}
 	}
@@ -145,14 +152,14 @@ public class DrawMaze extends JFrame
 		
 		maze.setCurrentWall("N", false);
 		maze.setCurrentWall("E", true);
-		maze.robotPos.MoveNorth();
+		maze.explorer.MoveNorth();
 		maze.setCurrentWall("N", false);
 		maze.setCurrentWall("E", true);
-		maze.robotPos.MoveNorth();
+		maze.explorer.MoveNorth();
 		maze.setCurrentWall("N", true);
 		maze.setCurrentWall("E", false);
 		
-		maze.robotPos.MoveEast();
+		maze.explorer.MoveEast();
 		maze.setCurrentWall("N", true);
 		maze.setCurrentWall("E", false);
 		maze.setCurrentWall("S", false);

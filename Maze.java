@@ -39,20 +39,24 @@ public class Maze
 	 * The actual height of the physical maze.
 	 */
 	public int height;
-	public RobotPos robotPos;
+	public Explorer explorer;
 	
 	public Maze(int width, int height) {
 		createMazeLayout(width, height);
 		//we start in bottom left
-		this.robotPos = new RobotPos(1, this.height, this);
+		this.explorer = new Explorer(1, this.height, this);
 		setCurrentPosVisited();
 	}
 	
-	public Maze(int width, int height, RobotPos robotPos) {
+	public Maze(int width, int height, Explorer explorer) {
 		createMazeLayout(width, height);
 		//we start with a custom robot position
-		this.robotPos = robotPos;
+		this.explorer = explorer;
 		setCurrentPosVisited();
+	}
+	
+	public void setExplorer(Explorer explorer) {
+		this.explorer = explorer;
 	}
 	
 	/**
@@ -80,7 +84,7 @@ public class Maze
 			this.width = csvRows[0].split(",").length - 1;
 			System.out.println(width);
 			createMazeLayout(width,height);
-			this.robotPos = new RobotPos(1, this.height, this);
+			this.explorer = new Explorer(1, this.height, this);
 			
 			Boolean S;
 			Boolean E;
@@ -109,7 +113,7 @@ public class Maze
 			this.height = htmlRows.length - 1;
 			this.width = htmlRows[1].split("cell").length - 1;
 			createMazeLayout(width,height);
-			this.robotPos = new RobotPos(1, this.height, this);
+			this.explorer = new Explorer(1, this.height, this);
 			
 			Boolean S;
 			Boolean E;
@@ -174,7 +178,7 @@ public class Maze
 	}
 	
 	private void setCurrentPosVisited() {
-		this.layout[this.robotPos.x][this.robotPos.y].setVisited(true);
+		this.layout[this.explorer.x][this.explorer.y].setVisited(true);
 	}
 	
 	/**
@@ -199,23 +203,23 @@ public class Maze
 	}
 
 	public Cell getCurrentCell() {
-		return layout[this.robotPos.x][this.robotPos.y];
+		return layout[this.explorer.x][this.explorer.y];
 	}
 	
 	public Cell getNorthCell() {
-		return layout[this.robotPos.x][this.robotPos.y - 1];
+		return layout[this.explorer.x][this.explorer.y - 1];
 	}
 	
 	public Cell getEastCell() {
-		return layout[this.robotPos.x + 1][this.robotPos.y];
+		return layout[this.explorer.x + 1][this.explorer.y];
 	}
 	
 	public Cell getSouthCell() {
-		return layout[this.robotPos.x][this.robotPos.y + 1];
+		return layout[this.explorer.x][this.explorer.y + 1];
 	}
 	
 	public Cell getWestCell() {
-		return layout[this.robotPos.x - 1][this.robotPos.y];
+		return layout[this.explorer.x - 1][this.explorer.y];
 	}
 	
 	public Graph getGraph() {
