@@ -138,8 +138,6 @@ public class MazeExploration
 	{
 		String[] directions;
 		if (path.size() > 1) {
-			System.out.print("path: ");
-			System.out.println(path);
 			directions = new String[path.size()-1];
 			String pathStr = path.toString();
 			pathStr = pathStr.substring(1, pathStr.length()-1);
@@ -151,16 +149,8 @@ public class MazeExploration
 			int[] currentPos = posQueue.removeFirst();
 			int[] nextPos;
 			int counter = 0;
-			System.out.print("queue Size: ");
-			System.out.println(posQueue.size());
-			System.out.print("path after pop: ");
-			System.out.println(path);
 			while (posQueue.size() > 0) {
 				nextPos = posQueue.removeFirst();
-				System.out.print("current: ");
-				System.out.println(myToString(currentPos));
-				System.out.print("next: ");
-				System.out.println(myToString(nextPos));
 				if (nextPos[1] < currentPos[1]) {
 					directions[counter] = "N";
 				}
@@ -180,7 +170,6 @@ public class MazeExploration
 		}
 		else {
 			directions = new String[] {};
-			System.out.println("directions empty");
 		}
 		return directions;
 	}
