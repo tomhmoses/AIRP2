@@ -173,12 +173,12 @@ public class DrawMaze extends JFrame
 		
 		try
 		{
-			Maze realMaze = new Maze("maze3.html");
+			Maze mapMaze = new Maze("maze3.html");
 			Maze maze = new Maze(realMaze.width, realMaze.height);
+			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
-			new DrawMaze(realMaze).setVisible(true);
 			delay(5000);
-			new MazeExploration(maze, realMaze, 1);
+			new MazeExploration(maze, mapMaze, 1);
 		}
 		catch (IOException e)
 		{
@@ -194,12 +194,12 @@ public class DrawMaze extends JFrame
 		
 		try
 		{
-			Maze realMaze = new Maze("SE_CSV.csv");
+			Maze mapMaze = new Maze("SE_CSV.csv");
 			Maze maze = new Maze(realMaze.width, realMaze.height);
+			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
-			new DrawMaze(realMaze).setVisible(true);
 			delay(1000);
-			new MazeExploration(maze, realMaze, 500);
+			new MazeExploration(maze, mapMaze, 500);
 		}
 		catch (IOException e)
 		{

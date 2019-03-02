@@ -1,10 +1,9 @@
 
-public class Explorer implements ExplorerInterface
+public abstract class Explorer implements ExplorerInterface
 {
 	public int x;
 	public int y;
 	private Maze maze;
-	private Maze mapMaze;
 	
 	public Explorer(int x, int y, Maze maze) {
 		this.x = x;
@@ -18,10 +17,6 @@ public class Explorer implements ExplorerInterface
 	@Override
 	public void setMaze(Maze maze) {
 		this.maze = maze;
-	}
-	
-	public void setMapMaze(Maze mapMaze) {
-		this.mapMaze = mapMaze;
 	}
 	
 	/* (non-Javadoc)
@@ -69,20 +64,5 @@ public class Explorer implements ExplorerInterface
 		maze.getCurrentCell().setVisited(true);
 	}
 	
-	public Boolean[] getCurrentWalls() {
-		return mapMaze.layout[this.x][this.y].getWalls();
-	}
 	
-	/* (non-Javadoc)
-	 * @see ExplorerInterface#reachedGoal()
-	 */
-	@Override
-	public Boolean reachedGoal() {
-		if (x == 1 && y == 1) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
 }

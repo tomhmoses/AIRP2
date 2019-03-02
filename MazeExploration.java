@@ -5,13 +5,15 @@ import org.graphstream.algorithm.AStar;
 
 public class MazeExploration
 {
-	public MazeExploration(Maze maze, Maze realMaze) {
-		maze.explorer.setMapMaze(realMaze);
+	public MazeExploration(Maze maze, Maze mapMaze) {
+		maze.setExplorer(new ExplorerWithMap(maze);
+		maze.explorer.setMapMaze(mapMaze);
 		exploreMaze(maze, 0);
 	}
 	
-	public MazeExploration(Maze maze, Maze realMaze, int delay) {
-		maze.explorer.setMapMaze(realMaze);
+	public MazeExploration(Maze maze, Maze mapMaze, int delay) {
+		maze.setExplorer(new ExplorerWithMap(maze);
+		maze.explorer.setMapMaze(mapMaze);
 		exploreMaze(maze, delay);
 	}
 	

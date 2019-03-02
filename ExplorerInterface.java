@@ -13,6 +13,8 @@ public interface ExplorerInterface
 	void MoveEast();
 
 	void MoveWest();
+	
+	Boolean[] getCurrentWalls();
 
 	Boolean reachedGoal();
 
