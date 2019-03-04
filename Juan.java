@@ -17,6 +17,11 @@ public class Juan extends IRSensor implements RobotInterface
 {
 	private String currentDirection = "N";
 	
+	/**
+	 * Used to send the maze back to the laptop
+	 */
+	public EV3Server = new EV3Server();
+	
 	public Juan(Port port)
 	{
 		super(port);

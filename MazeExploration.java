@@ -5,26 +5,50 @@ import org.graphstream.algorithm.AStar;
 
 public class MazeExploration
 {
+
+	private Boolean withRobot = false;
+	private Maze maze;
+	
+	/**
+	 * used to demo exploring the maze using an explorer with a map and with no delay
+	 */
 	public MazeExploration(Maze maze, Maze mapMaze) {
-		maze.setExplorer(new ExplorerWithMap(maze);
-		maze.explorer.setMapMaze(mapMaze);
-		exploreMaze(maze, 0);
+		this.maze = maze;
+		maze.setExplorer(new ExplorerWithMap(this.maze);
+		this.maze.explorer.setMapMaze(mapMaze);
+		exploreMaze(0);
 	}
 	
+	/**
+	 * used to demo exploring the maze using an explorer with a map and with a chosen delay
+	 */
 	public MazeExploration(Maze maze, Maze mapMaze, int delay) {
-		maze.setExplorer(new ExplorerWithMap(maze);
-		maze.explorer.setMapMaze(mapMaze);
-		exploreMaze(maze, delay);
+		this.maze = maze;
+		this.maze.setExplorer(new ExplorerWithMap(this.maze);
+		this.maze.explorer.setMapMaze(mapMaze);
+		exploreMaze(delay);
+	}
+	
+	/**
+	 * used when robot is exploring maze
+	 */
+	public MazeExploration(Maze maze) {
+		this.maze = maze;
+		withRobot = true;
+		exploreMaze(0);
 	}
 	
 	
-	public static void exploreMaze(Maze maze, int delay)
+	public static void exploreMaze(int delay)
 	{
 		Deque<int[]> visitStack = new ArrayDeque<>();
 		Boolean stillToVisit = true;
 		Boolean[] walls;
 		visitStack.addFirst(new int[] {maze.explorer.x,maze.explorer.y});
 		while (stillToVisit) {
+			if (withRobot) {
+				sendMaze()
+			}
 			try
 			{
 				Thread.sleep(delay);
@@ -71,6 +95,9 @@ public class MazeExploration
 						maze.getWestCell().type = "planned";
 					}
 				}
+			}
+			if (withRobot) {
+				sendMaze()
 			}
 			if (visitStack.size() == 0 || maze.explorer.reachedGoal()) {
 				stillToVisit = false;
@@ -123,6 +150,9 @@ public class MazeExploration
 			else if (directions[i] == "W") {
 				maze.explorer.MoveWest();
 			}
+			if (withRobot) {
+				sendMaze()
+			}
 			try
 			{
 				Thread.sleep(100);
@@ -172,5 +202,9 @@ public class MazeExploration
 			directions = new String[] {};
 		}
 		return directions;
+	}
+	
+	private void sendMaze() {
+		this.maze.explorer.robot.EV3Server.sendObj(this.maze);
 	}
 }

@@ -6,6 +6,8 @@ public class EV3Server
 {
 
 	public static final int port = 1234;
+	private DataOutputStream dOut;
+	private ObjectOutputStream oOut;
 	
 	public static void main(String[] args) throws IOException 
 	{
@@ -14,9 +16,20 @@ public class EV3Server
 		Socket client = server.accept();
 		System.out.println("CONNECTED");
 		OutputStream out = client.getOutputStream();
-		DataOutputStream dOut = new DataOutputStream(out);
-		dOut.writeUTF("Battery: " + Battery.getVoltage());
-		dOut.flush();server.close();
+		dOut = new DataOutputStream(out);
+		// dOut.writeUTF("Battery: " + Battery.getVoltage());
+		// dOut.flush();server.close();
+		oOut = new ObjectOutputStream(out);
+	}
+	
+	public void sendUTF(String string)
+	{
+		dOut.writeUTF(string);
+	}
+	
+	public void sendObj(Object obj)
+	{
+		oOut.writeObject(obj);
 	}
 	
 }
