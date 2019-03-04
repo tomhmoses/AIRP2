@@ -17,9 +17,25 @@ class MazeCanvas extends JPanel implements Runnable
 	int		rows;
 	int		columns;
 	Maze	maze;
+	Boolean remote = false;
+	EV3Client client;
 
 	public MazeCanvas(int w, int h, Maze maze)
 	{
+		this.rows = maze.height;
+		this.columns = maze.width;
+		this.maze = maze;
+		this.setPreferredSize(new Dimension(1920 / 2, 1080 / 2));
+		setSize(width = this.rows * 100, height = this.height * 100);
+		Thread runThread = new Thread(this);
+		runThread.start();
+	}
+	
+	public MazeCanvas(int w, int h, Maze maze, Boolean remote)
+	{
+		this.remote = remote;
+		// TODO: figure out if this is the right way to instanciate the client:
+		this.client = new EV3Client();
 		this.rows = maze.height;
 		this.columns = maze.width;
 		this.maze = maze;
@@ -133,6 +149,10 @@ class MazeCanvas extends JPanel implements Runnable
 	public void run()
 	{
 		while(true) {
+			if (remote) {
+				// should just wait until it receives the maze
+				this.maze = // TODO: figure out how to receive the object
+			}
 			this.repaint();
 		}
 	}
@@ -169,8 +189,6 @@ public class DrawMaze extends JFrame
 	}
 	
 	private static void HTMLMazeDemo() {
-
-		
 		try
 		{
 			Maze mapMaze = new Maze("maze3.html");
@@ -189,9 +207,6 @@ public class DrawMaze extends JFrame
 	}
 	
 	private static void CSVMazeDemo() {
-
-		
-		
 		try
 		{
 			Maze mapMaze = new Maze("SE_CSV.csv");
@@ -208,6 +223,13 @@ public class DrawMaze extends JFrame
 		delay(10000);
 		System.exit(0);
 	}
+	
+	private static void RemoteMazeViewer() {
+		// sets a temp maze
+		maze = new Maze(9, 6);
+		new DrawMaze(maze).setVisible(true)
+		delay(10000);
+		System.exit(0);
 
 	private static void delay()
 	{
