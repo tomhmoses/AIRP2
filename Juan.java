@@ -13,14 +13,10 @@ import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 
-public class Juan extends IRSensor implements RobotInterface
+public class Juan extends IRSensor
 {
 	private String currentDirection = "N";
-	
-	/**
-	 * Used to send the maze back to the laptop
-	 */
-	public EV3Server = new EV3Server();
+	private static MovePilot pilot;
 	
 	public Juan(Port port)
 	{
@@ -62,7 +58,7 @@ public class Juan extends IRSensor implements RobotInterface
 		Wheel RIGHT_WHEEL = WheeledChassis.modelWheel(RIGHT_MOTOR, 5.6).offset(offset);
 
 		Chassis chassis = new WheeledChassis(new Wheel[] { LEFT_WHEEL, RIGHT_WHEEL }, WheeledChassis.TYPE_DIFFERENTIAL);
-		MovePilot pilot = new MovePilot(chassis);
+		pilot = new MovePilot(chassis);
 
 		@SuppressWarnings("resource")
 		ColorSensor LEFT_COLOR = new ColorSensor(BRICK.getPort("S2"));
@@ -103,40 +99,108 @@ public class Juan extends IRSensor implements RobotInterface
 
 	public void MoveNorth()
 	{
+		//take into account what direction it is facing and then rotate how much to move fwds
 		// TODO Auto-generated method stub
+		if (currentDirection == "N") 
+		{
+			pilot.travel(30);
+		}
+		else if (currentDirection == "S")
+		{
+			pilot.rotate(180);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "E")
+		{
+			pilot.rotate(-90);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "W")
+		{
+			pilot.rotate(90);
+			pilot.travel(30);
+		}
 		
+		currentDirection = "N";
 	}
 
 	public void MoveSouth()
 	{
 		// TODO Auto-generated method stub
+		if (currentDirection == "N") 
+		{
+			pilot.rotate(180);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "S")
+		{
+			pilot.travel(30);
+		}
+		else if (currentDirection == "E")
+		{
+			pilot.rotate(90);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "W")
+		{
+			pilot.rotate(-90);
+			pilot.travel(30);
+		}
 		
+		currentDirection = "S";
 	}
 
 	public void MoveEast()
 	{
 		// TODO Auto-generated method stub
+		if (currentDirection == "N") 
+		{
+			pilot.rotate(-90);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "S")
+		{
+			pilot.rotate(90);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "E")
+		{
+			pilot.travel(30);
+		}
+		else if (currentDirection == "W")
+		{
+			pilot.rotate(180);
+			pilot.travel(30);
+		}
+		
+		currentDirection = "E";
 		
 	}
 
 	public void MoveWest()
 	{
 		// TODO Auto-generated method stub
+		if (currentDirection == "N") 
+		{
+			pilot.rotate(90);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "S")
+		{
+			pilot.rotate(-90);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "E")
+		{
+			pilot.rotate(180);
+			pilot.travel(30);
+		}
+		else if (currentDirection == "W")
+		{
+			pilot.travel(30);
+		}
 		
-	}
-
-	@Override
-	public Boolean reachedGoal()
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Boolean[] getCurrentWalls()
-	{
-		// TODO Auto-generated method stub
-		return null;
+		currentDirection = "W";
 	}
 	
 }
