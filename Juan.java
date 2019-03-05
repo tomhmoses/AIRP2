@@ -20,14 +20,14 @@ import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
 import lejos.utility.Delay;
 
-public class Juan extends IRSensor
+public class Juan implements RobotInterface
 {
 	private String currentDirection = "N";
 	private static MovePilot pilot;
 	
 	public Juan(Port port)
 	{
-		super(port);
+		super();
 		// TODO Auto-generated constructor stub
 	}
 
@@ -235,6 +235,20 @@ public class Juan extends IRSensor
 		}
 		
 		currentDirection = "W";
+	}
+
+	@Override
+	public Boolean reachedGoal()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean[] getCurrentWalls()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
