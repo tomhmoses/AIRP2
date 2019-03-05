@@ -22,9 +22,9 @@ import lejos.utility.Delay;
 
 public class Juan implements RobotInterface
 {
-	private String currentDirection = "N";
-	private static MovePilot pilot;
-	
+	private String				currentDirection	= "N";
+	private static MovePilot	pilot;
+
 	public Juan(Port port)
 	{
 		super();
@@ -34,7 +34,7 @@ public class Juan implements RobotInterface
 	//IR sensor to stay 8cm away from wall
 	//spin motor to move IR sensor to detect in front of it 
 	//wheel motors to go 30cm forwards and rotate 90/180 degrees to move
-	
+
 	public static void main(String[] args) throws IOException
 	{
 		@SuppressWarnings("resource")
@@ -82,60 +82,13 @@ public class Juan implements RobotInterface
 
 		LCD.clear();
 		Sound.setVolume(1);
-
-		while (buttons.getButtons() != Keys.ID_ESCAPE)
-		{
-			SPIN_MOTOR.rotate(90);
-			Delay.msDelay(180);
-			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 1);
-			
-			SPIN_MOTOR.rotate(-90);
-			Delay.msDelay(180);
-			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 2);
-			
-			SPIN_MOTOR.rotate(-90);
-			Delay.msDelay(180);
-			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 3);
-			
-			SPIN_MOTOR.rotate(90);
-			Delay.msDelay(180);
-			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 4);
-		}
 	}
-	
-	/*final int port = 1234;
-	DataOutputStream dOut;
-	ObjectOutputStream oOut;
-	
-	ServerSocket server = new ServerSocket(port);
-	LCD.drawString("Awaiting client..", 0, 5);
-	Socket client = server.accept();
-	LCD.clear();
-	LCD.drawString("CONNECTED", 0, 5);
-	OutputStream out = client.getOutputStream();
-	dOut = new DataOutputStream(out);
-	// dOut.writeUTF("Battery: " + Battery.getVoltage());
-	// dOut.flush();server.close();
-	oOut = new ObjectOutputStream(out);
-	
-	}
-	
-	public void sendUTF(String string) throws IOException
-	{
-		DataOutputStream dOut = null;
-		dOut.writeUTF(string);
-	}
-	
-	public void sendObj(ObjectOutputStream obj) throws IOException
-	{
-		oOut.writeObject(obj);
-	}*/
 
 	public void MoveNorth()
 	{
 		//take into account what direction it is facing and then rotate how much to move forwards
 		// TODO Auto-generated method stub
-		if (currentDirection == "N") 
+		if (currentDirection == "N")
 		{
 			pilot.travel(30);
 		}
@@ -154,14 +107,14 @@ public class Juan implements RobotInterface
 			pilot.rotate(90);
 			pilot.travel(30);
 		}
-		
+
 		currentDirection = "N";
 	}
 
 	public void MoveSouth()
 	{
 		// TODO Auto-generated method stub
-		if (currentDirection == "N") 
+		if (currentDirection == "N")
 		{
 			pilot.rotate(180);
 			pilot.travel(30);
@@ -180,14 +133,14 @@ public class Juan implements RobotInterface
 			pilot.rotate(-90);
 			pilot.travel(30);
 		}
-		
+
 		currentDirection = "S";
 	}
 
 	public void MoveEast()
 	{
 		// TODO Auto-generated method stub
-		if (currentDirection == "N") 
+		if (currentDirection == "N")
 		{
 			pilot.rotate(-90);
 			pilot.travel(30);
@@ -206,15 +159,15 @@ public class Juan implements RobotInterface
 			pilot.rotate(180);
 			pilot.travel(30);
 		}
-		
+
 		currentDirection = "E";
-		
+
 	}
 
 	public void MoveWest()
 	{
 		// TODO Auto-generated method stub
-		if (currentDirection == "N") 
+		if (currentDirection == "N")
 		{
 			pilot.rotate(90);
 			pilot.travel(30);
@@ -233,7 +186,7 @@ public class Juan implements RobotInterface
 		{
 			pilot.travel(30);
 		}
-		
+
 		currentDirection = "W";
 	}
 
@@ -248,7 +201,72 @@ public class Juan implements RobotInterface
 	public Boolean[] getCurrentWalls()
 	{
 		// TODO Auto-generated method stub
-		return null;
+		EV3 BRICK = (EV3) BrickFinder.getLocal();
+		EV3LargeRegulatedMotor SPIN_MOTOR = new EV3LargeRegulatedMotor(MotorPort.A);
+		IRSensor IR_SENSOR = new IRSensor(BRICK.getPort("S4"));
+		
+		Double NorthDistance = null;
+		Double EastDistance = null;
+		Double SouthDistance = null;
+		Double WestDistance = null;
+
+		if (currentDirection == "N")
+		{
+			NorthDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			EastDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			SouthDistance = null;
+			SPIN_MOTOR.rotate(90);
+			WestDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+		}
+		else if (currentDirection == "E")
+		{
+			EastDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			SouthDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			WestDistance = null;
+			SPIN_MOTOR.rotate(90);
+			NorthDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+		}
+		else if (currentDirection == "S")
+		{
+			SouthDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			WestDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			NorthDistance = null;
+			SPIN_MOTOR.rotate(90);
+			EastDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+		}
+		else if (currentDirection == "W")
+		{
+			WestDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			NorthDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+			EastDistance = null;
+			SPIN_MOTOR.rotate(90);
+			SouthDistance = IR_SENSOR.getDistance();
+			SPIN_MOTOR.rotate(90);
+		}
+
+		
+		Double[] distArray = new Double[] {NorthDistance, EastDistance, SouthDistance, WestDistance};
+		Boolean[] boolArray = new Boolean[4];
+		
+		for (int i = 0; i<4; i++) {
+			if (distArray[i] > 0) {
+				boolArray[i] = true;
+			} else {
+				boolArray[i] = false;
+			}
+		}
+		
+		return boolArray;
 	}
-	
 }
