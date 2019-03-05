@@ -74,10 +74,18 @@ public class MazeExploration
 			travelTo(visitStack.removeFirst(), maze);
 			maze.getCurrentCell().setVisited(true);
 			walls = maze.explorer.getCurrentWalls();
-			maze.setCurrentWall("N", walls[0]);
-			maze.setCurrentWall("E", walls[1]);
-			maze.setCurrentWall("S", walls[2]);
-			maze.setCurrentWall("W", walls[3]);
+			if (walls[0] != null) {
+				maze.setCurrentWall("N", walls[0]);
+			}
+			if (walls[1] != null) {
+				maze.setCurrentWall("E", walls[1]);
+			}
+			if (walls[2] != null) {
+				maze.setCurrentWall("S", walls[2]);
+			}
+			if (walls[3] != null) {
+				maze.setCurrentWall("W", walls[3]);
+			}
 			if (maze.getCurrentCell().getN() == false) {
 				if (maze.getNorthCell().getVisited() == false) {
 					if (maze.getNorthCell().type.equals("normal")) {
