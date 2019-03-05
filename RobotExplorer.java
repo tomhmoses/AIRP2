@@ -12,6 +12,11 @@ public class RobotExplorer extends Explorer
 		super(x, y, maze);
 	}
 	
+	public RobotExplorer(Maze maze)
+	{
+		super(maze);
+	}
+
 	public void setRobot(RobotInterface robot) {
 		this.robot = robot;
 	}
