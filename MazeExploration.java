@@ -1,3 +1,8 @@
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import org.graphstream.graph.*;
@@ -14,8 +19,10 @@ public class MazeExploration
 	
 	/**
 	 * used to demo exploring the maze using an explorer with a map and with no delay
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
-	public MazeExploration(Maze maze, Maze mapMaze) {
+	public MazeExploration(Maze maze, Maze mapMaze) throws UnknownHostException, IOException {
 		this.maze = maze;
 		maze.setExplorer(new ExplorerWithMap(0, 0, this.maze));
 		this.maze.explorer.setMaze(mapMaze);
@@ -24,8 +31,10 @@ public class MazeExploration
 	
 	/**
 	 * used to demo exploring the maze using an explorer with a map and with a chosen delay
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
-	public MazeExploration(Maze maze, Maze mapMaze, int delay) {
+	public MazeExploration(Maze maze, Maze mapMaze, int delay) throws UnknownHostException, IOException {
 		this.maze = maze;
 		this.maze.setExplorer(new ExplorerWithMap(delay, delay, this.maze));
 		this.maze.explorer.setMaze(mapMaze);
@@ -34,15 +43,17 @@ public class MazeExploration
 	
 	/**
 	 * used when robot is exploring maze
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
-	public MazeExploration(Maze maze) {
+	public MazeExploration(Maze maze) throws UnknownHostException, IOException {
 		this.maze = maze;
 		withRobot = true;
 		exploreMaze(0);
 	}
 	
 	
-	public static void exploreMaze(int delay)
+	public static void exploreMaze(int delay) throws UnknownHostException, IOException
 	{
 		Deque<int[]> visitStack = new ArrayDeque<>();
 		Boolean stillToVisit = true;
@@ -130,7 +141,7 @@ public class MazeExploration
 		return position;
 	}
 
-	private static void travelTo(int[] goalPos, Maze maze)
+	private static void travelTo(int[] goalPos, Maze maze) throws UnknownHostException, IOException
 	{
 		int[] currentPos = maze.getCurrentCell().position;
 		Graph graph = maze.getGraph();
@@ -206,8 +217,17 @@ public class MazeExploration
 		}
 		return directions;
 	}
-	
+
 	private static void sendMaze() {
-		maze.explorer.robot.server.sendObj(maze);
-	}
+        try
+        {
+            new EV3Server(maze);
+        }
+        catch (IOException e)
+        {
+            // TODO get it to print the LCD saying it failed
+            e.printStackTrace();
+           
+        }
+    }
 }

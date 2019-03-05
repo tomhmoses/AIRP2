@@ -1,17 +1,20 @@
 import java.io.*;
 import java.net.*;
-
+ 
 public class EV3Client
 {
-	public static void main(String[] args) throws IOException {
-		String ip = "10.0.1.1"; // BT
-		if (args.length > 0)
-			ip = args[0];
-		Socket sock = new Socket(ip, EV3Server.port);
-		System.out.println("Connected");
-		InputStream in = sock.getInputStream();
-		DataInputStream dIn = new DataInputStream(in);
-		String str = dIn.readUTF();
-		System.out.println(str);sock.close();
-	}
+    public EV3Client() {
+        // does nothing when instantiated
+    }
+   
+    public Maze getMaze() throws IOException, ClassNotFoundException {
+        String ip = "10.0.1.1"; // BT
+        Socket sock = new Socket(ip, EV3Server.port);
+        System.out.println("Connected");
+        InputStream in = sock.getInputStream();
+        ObjectInputStream oIn = new ObjectInputStream(in);
+        Maze obj = (Maze) oIn.readObject();
+        sock.close();
+        return obj;
+    }
 }

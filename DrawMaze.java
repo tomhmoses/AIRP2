@@ -20,7 +20,7 @@ class MazeCanvas extends JPanel implements Runnable
 	int		columns;
 	Maze	maze;
 	Boolean remote = false;
-	EV3Client client;
+	EV3Client client = new EV3Client();
 
 	public MazeCanvas(int w, int h, Maze maze)
 	{
@@ -147,17 +147,25 @@ class MazeCanvas extends JPanel implements Runnable
 		}
 	}
 
-	@Override
-	public void run()
-	{
-		while(true) {
-			if (remote) {
-				// should just wait until it receives the maze
-				this.maze =  // TODO: figure out how to receive the object
-			}
-			this.repaint();
-		}
-	}
+    @Override
+    public void run()
+    {
+        while(true) {
+            if (remote) {
+                // should just wait until it receives the maze
+                try
+                {
+                    this.maze = client.getMaze();
+                }
+                catch (ClassNotFoundException | IOException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } // TODO: figure out how to receive the object
+            }
+            this.repaint();
+        }
+    }
 }
 
 public class DrawMaze extends JFrame

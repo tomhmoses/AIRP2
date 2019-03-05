@@ -23,7 +23,6 @@ import lejos.utility.Delay;
 public class Juan extends IRSensor
 {
 	private String currentDirection = "N";
-	public EV3Server server = new EV3Server();
 	private static MovePilot pilot;
 	
 	public Juan(Port port)
@@ -86,7 +85,6 @@ public class Juan extends IRSensor
 
 		while (buttons.getButtons() != Keys.ID_ESCAPE)
 		{
-		
 			SPIN_MOTOR.rotate(90);
 			Delay.msDelay(180);
 			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 1);
@@ -135,7 +133,7 @@ public class Juan extends IRSensor
 
 	public void MoveNorth()
 	{
-		//take into account what direction it is facing and then rotate how much to move fwds
+		//take into account what direction it is facing and then rotate how much to move forwards
 		// TODO Auto-generated method stub
 		if (currentDirection == "N") 
 		{
