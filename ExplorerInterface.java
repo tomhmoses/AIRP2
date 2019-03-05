@@ -1,4 +1,10 @@
 
+/**
+ * <img src="https://tinyurl.com/y322n7gs" width="250">
+ * 
+ * @author Tom
+ *
+ */
 public interface ExplorerInterface
 {
 
