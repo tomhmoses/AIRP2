@@ -18,31 +18,35 @@ import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
 import lejos.robotics.navigation.MovePilot;
-import lejos.utility.Delay;
 
 public class Juan implements RobotInterface
 {
 	private String				currentDirection	= "N";
+	
+	private EV3LargeRegulatedMotor SPIN_MOTOR;
+	private EV3LargeRegulatedMotor LEFT_MOTOR;
+	private EV3LargeRegulatedMotor RIGHT_MOTOR;
+	private EV3 BRICK;
+	private IRSensor IR_SENSOR;
+	private ColorSensor LEFT_COLOR;
+	private ColorSensor RIGHT_COLOR;
+	private TouchSensor TOUCH;
+	private Keys buttons;
 	private static MovePilot	pilot;
-
-	public Juan(Port port)
-	{
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
+	
 
 	//IR sensor to stay 8cm away from wall
 	//spin motor to move IR sensor to detect in front of it 
 	//wheel motors to go 30cm forwards and rotate 90/180 degrees to move
 
-	public static void main(String[] args) throws IOException
+	public Juan()
 	{
-		@SuppressWarnings("resource")
-		EV3LargeRegulatedMotor SPIN_MOTOR = new EV3LargeRegulatedMotor(MotorPort.A);
-		EV3LargeRegulatedMotor LEFT_MOTOR = new EV3LargeRegulatedMotor(MotorPort.B);
-		EV3LargeRegulatedMotor RIGHT_MOTOR = new EV3LargeRegulatedMotor(MotorPort.C);
+		SPIN_MOTOR = new EV3LargeRegulatedMotor(MotorPort.A);
+		LEFT_MOTOR = new EV3LargeRegulatedMotor(MotorPort.B);
+		RIGHT_MOTOR = new EV3LargeRegulatedMotor(MotorPort.C);
 
-		EV3 BRICK = (EV3) BrickFinder.getLocal();
+		BRICK = (EV3) BrickFinder.getLocal();
 
 		Sound.beepSequenceUp();
 
@@ -50,7 +54,7 @@ public class Juan implements RobotInterface
 		LCD.drawString("turn me on ;)", 0, 1);
 		LCD.drawString("vJuan.3.31.9", 0, 2);
 
-		Keys buttons = BRICK.getKeys();
+		buttons = BRICK.getKeys();
 		Button.LEDPattern(2);
 		buttons.waitForAnyPress();
 		Button.LEDPattern(3);
@@ -67,27 +71,22 @@ public class Juan implements RobotInterface
 		Chassis chassis = new WheeledChassis(new Wheel[] { LEFT_WHEEL, RIGHT_WHEEL }, WheeledChassis.TYPE_DIFFERENTIAL);
 		pilot = new MovePilot(chassis);
 
-		@SuppressWarnings("resource")
-		ColorSensor LEFT_COLOR = new ColorSensor(BRICK.getPort("S2"));
-		@SuppressWarnings("resource")
-		ColorSensor RIGHT_COLOR = new ColorSensor(BRICK.getPort("S3"));
-		@SuppressWarnings("resource")
-		TouchSensor TOUCH = new TouchSensor(BRICK.getPort("S1"));
-		@SuppressWarnings("resource")
-		IRSensor IR_SENSOR = new IRSensor(BRICK.getPort("S4"));
+		LEFT_COLOR = new ColorSensor(BRICK.getPort("S2"));
+		RIGHT_COLOR = new ColorSensor(BRICK.getPort("S3"));
+		TOUCH = new TouchSensor(BRICK.getPort("S1"));
+		IR_SENSOR = new IRSensor(BRICK.getPort("S4"));
 
 		double SPEED = 10;
 		pilot.setLinearSpeed(SPEED);
 		pilot.setAngularSpeed(SPEED * SPEED);
 
 		LCD.clear();
-		Sound.setVolume(1);
+		//Sound.setVolume(1);
 	}
 
 	public void MoveNorth()
 	{
 		//take into account what direction it is facing and then rotate how much to move forwards
-		// TODO Auto-generated method stub
 		if (currentDirection == "N")
 		{
 			pilot.travel(30);
@@ -113,7 +112,6 @@ public class Juan implements RobotInterface
 
 	public void MoveSouth()
 	{
-		// TODO Auto-generated method stub
 		if (currentDirection == "N")
 		{
 			pilot.rotate(180);
@@ -139,7 +137,6 @@ public class Juan implements RobotInterface
 
 	public void MoveEast()
 	{
-		// TODO Auto-generated method stub
 		if (currentDirection == "N")
 		{
 			pilot.rotate(-90);
@@ -166,7 +163,6 @@ public class Juan implements RobotInterface
 
 	public void MoveWest()
 	{
-		// TODO Auto-generated method stub
 		if (currentDirection == "N")
 		{
 			pilot.rotate(90);
@@ -193,18 +189,12 @@ public class Juan implements RobotInterface
 	@Override
 	public Boolean reachedGoal()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return RIGHT_COLOR.onRed();
 	}
 
 	@Override
 	public Boolean[] getCurrentWalls()
 	{
-		// TODO Auto-generated method stub
-		EV3 BRICK = (EV3) BrickFinder.getLocal();
-		EV3LargeRegulatedMotor SPIN_MOTOR = new EV3LargeRegulatedMotor(MotorPort.A);
-		IRSensor IR_SENSOR = new IRSensor(BRICK.getPort("S4"));
-		
 		Double NorthDistance = null;
 		Double EastDistance = null;
 		Double SouthDistance = null;
