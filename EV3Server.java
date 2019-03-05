@@ -1,20 +1,22 @@
 import java.io.*;
 import java.net.*;
 import lejos.hardware.Battery;
+import lejos.hardware.lcd.LCD;
 
 public class EV3Server
 {
 
 	public static final int port = 1234;
-	private DataOutputStream dOut;
-	private ObjectOutputStream oOut;
+	private static DataOutputStream dOut;
+	private static ObjectOutputStream oOut;
 	
 	public static void main(String[] args) throws IOException 
 	{
 		ServerSocket server = new ServerSocket(port);
-		System.out.println("Awaiting client..");
+		LCD.drawString("Awaiting client..", 0, 5);
 		Socket client = server.accept();
-		System.out.println("CONNECTED");
+		LCD.clear();
+		LCD.drawString("CONNECTED", 0, 5);
 		OutputStream out = client.getOutputStream();
 		dOut = new DataOutputStream(out);
 		// dOut.writeUTF("Battery: " + Battery.getVoltage());
@@ -22,12 +24,12 @@ public class EV3Server
 		oOut = new ObjectOutputStream(out);
 	}
 	
-	public void sendUTF(String string)
+	public void sendUTF(String string) throws IOException
 	{
 		dOut.writeUTF(string);
 	}
 	
-	public void sendObj(Object obj)
+	public void sendObj(Object obj) throws IOException
 	{
 		oOut.writeObject(obj);
 	}

@@ -4,6 +4,7 @@ public abstract class Explorer implements ExplorerInterface
 	public int x;
 	public int y;
 	private Maze maze;
+	public Object robot;
 	
 	public Explorer(int x, int y, Maze maze) {
 		this.x = x;

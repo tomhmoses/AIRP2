@@ -1,3 +1,10 @@
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Button;
 import lejos.hardware.Keys;
@@ -16,6 +23,7 @@ import lejos.utility.Delay;
 public class Juan extends IRSensor
 {
 	private String currentDirection = "N";
+	public EV3Server server = new EV3Server();
 	private static MovePilot pilot;
 	
 	public Juan(Port port)
@@ -28,7 +36,7 @@ public class Juan extends IRSensor
 	//spin motor to move IR sensor to detect in front of it 
 	//wheel motors to go 30cm forwards and rotate 90/180 degrees to move
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws IOException
 	{
 		@SuppressWarnings("resource")
 		EV3LargeRegulatedMotor SPIN_MOTOR = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -96,6 +104,34 @@ public class Juan extends IRSensor
 			LCD.drawString(Double.toString(IR_SENSOR.getDistance()), 0, 4);
 		}
 	}
+	
+	/*final int port = 1234;
+	DataOutputStream dOut;
+	ObjectOutputStream oOut;
+	
+	ServerSocket server = new ServerSocket(port);
+	LCD.drawString("Awaiting client..", 0, 5);
+	Socket client = server.accept();
+	LCD.clear();
+	LCD.drawString("CONNECTED", 0, 5);
+	OutputStream out = client.getOutputStream();
+	dOut = new DataOutputStream(out);
+	// dOut.writeUTF("Battery: " + Battery.getVoltage());
+	// dOut.flush();server.close();
+	oOut = new ObjectOutputStream(out);
+	
+	}
+	
+	public void sendUTF(String string) throws IOException
+	{
+		DataOutputStream dOut = null;
+		dOut.writeUTF(string);
+	}
+	
+	public void sendObj(ObjectOutputStream obj) throws IOException
+	{
+		oOut.writeObject(obj);
+	}*/
 
 	public void MoveNorth()
 	{

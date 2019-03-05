@@ -1,21 +1,24 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 import org.graphstream.graph.*;
+
+import lejos.robotics.pathfinding.Path;
+
 import org.graphstream.algorithm.AStar;
 
 public class MazeExploration
 {
 
-	private Boolean withRobot = false;
-	private Maze maze;
+	private static Boolean withRobot = false;
+	private static Maze maze;
 	
 	/**
 	 * used to demo exploring the maze using an explorer with a map and with no delay
 	 */
 	public MazeExploration(Maze maze, Maze mapMaze) {
 		this.maze = maze;
-		maze.setExplorer(new ExplorerWithMap(this.maze);
-		this.maze.explorer.setMapMaze(mapMaze);
+		maze.setExplorer(new ExplorerWithMap(0, 0, this.maze));
+		this.maze.explorer.setMaze(mapMaze);
 		exploreMaze(0);
 	}
 	
@@ -24,8 +27,8 @@ public class MazeExploration
 	 */
 	public MazeExploration(Maze maze, Maze mapMaze, int delay) {
 		this.maze = maze;
-		this.maze.setExplorer(new ExplorerWithMap(this.maze);
-		this.maze.explorer.setMapMaze(mapMaze);
+		this.maze.setExplorer(new ExplorerWithMap(delay, delay, this.maze));
+		this.maze.explorer.setMaze(mapMaze);
 		exploreMaze(delay);
 	}
 	
@@ -47,7 +50,7 @@ public class MazeExploration
 		visitStack.addFirst(new int[] {maze.explorer.x,maze.explorer.y});
 		while (stillToVisit) {
 			if (withRobot) {
-				sendMaze()
+				sendMaze();
 			}
 			try
 			{
@@ -97,7 +100,7 @@ public class MazeExploration
 				}
 			}
 			if (withRobot) {
-				sendMaze()
+				sendMaze();
 			}
 			if (visitStack.size() == 0 || maze.explorer.reachedGoal()) {
 				stillToVisit = false;
@@ -134,7 +137,7 @@ public class MazeExploration
 		AStar astar = new AStar(graph);
 		//astar.setCosts(new Costs());
 		astar.compute(myToString(currentPos), myToString(goalPos));
-		Path path = astar.getShortestPath();
+		org.graphstream.graph.Path path = astar.getShortestPath();
 		String[] directions = toDirectionArray(path);
 		for (int i = 0; i < directions.length; i++) {
 			System.out.println("Moving " + directions[i]);
@@ -151,7 +154,7 @@ public class MazeExploration
 				maze.explorer.MoveWest();
 			}
 			if (withRobot) {
-				sendMaze()
+				sendMaze();
 			}
 			try
 			{
@@ -164,7 +167,7 @@ public class MazeExploration
 		}
 	}
 
-	private static String[] toDirectionArray(Path path)
+	private static String[] toDirectionArray(org.graphstream.graph.Path path)
 	{
 		String[] directions;
 		if (path.size() > 1) {
@@ -204,7 +207,7 @@ public class MazeExploration
 		return directions;
 	}
 	
-	private void sendMaze() {
-		this.maze.explorer.robot.EV3Server.sendObj(this.maze);
+	private static void sendMaze() {
+		maze.explorer.robot.server.sendObj(maze);
 	}
 }

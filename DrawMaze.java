@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import lejos.utility.Delay;
+
 class MazeCanvas extends JPanel implements Runnable
 {
 	int		width, height;
@@ -151,7 +153,7 @@ class MazeCanvas extends JPanel implements Runnable
 		while(true) {
 			if (remote) {
 				// should just wait until it receives the maze
-				this.maze = // TODO: figure out how to receive the object
+				this.maze =  // TODO: figure out how to receive the object
 			}
 			this.repaint();
 		}
@@ -192,7 +194,7 @@ public class DrawMaze extends JFrame
 		try
 		{
 			Maze mapMaze = new Maze("maze3.html");
-			Maze maze = new Maze(realMaze.width, realMaze.height);
+			Maze maze = new Maze(mapMaze.width, mapMaze.height);
 			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
 			delay(5000);
@@ -210,7 +212,8 @@ public class DrawMaze extends JFrame
 		try
 		{
 			Maze mapMaze = new Maze("SE_CSV.csv");
-			Maze maze = new Maze(realMaze.width, realMaze.height);
+			Object realMaze;
+			Maze maze = new Maze(mapMaze.width, mapMaze.height);
 			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
 			delay(1000);
@@ -225,11 +228,12 @@ public class DrawMaze extends JFrame
 	}
 	
 	private static void RemoteMazeViewer() {
-		// sets a temp maze
-		maze = new Maze(9, 6);
-		new DrawMaze(maze).setVisible(true)
-		delay(10000);
+		//sets a temp Maze
+		Maze maze = new Maze(9,6);
+		new DrawMaze(maze).setVisible(true);
+		Delay.msDelay(10000);
 		System.exit(0);
+	}
 
 	private static void delay()
 	{

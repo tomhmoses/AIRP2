@@ -44,7 +44,7 @@ public class Maze
 	public Maze(int width, int height) {
 		createMazeLayout(width, height);
 		//we start in bottom left
-		this.explorer = new Explorer(1, this.height, this);
+		this.explorer = new ExplorerWithMap(1, this.height, this);
 		setCurrentPosVisited();
 	}
 	
@@ -84,7 +84,7 @@ public class Maze
 			this.width = csvRows[0].split(",").length - 1;
 			System.out.println(width);
 			createMazeLayout(width,height);
-			this.explorer = new Explorer(1, this.height, this);
+			this.explorer = new ExplorerWithMap(1, this.height, this);
 			
 			Boolean S;
 			Boolean E;
@@ -113,7 +113,7 @@ public class Maze
 			this.height = htmlRows.length - 1;
 			this.width = htmlRows[1].split("cell").length - 1;
 			createMazeLayout(width,height);
-			this.explorer = new Explorer(1, this.height, this);
+			this.explorer = new ExplorerWithMap(1, this.height, this);
 			
 			Boolean S;
 			Boolean E;
