@@ -12,6 +12,12 @@ public abstract class Explorer implements ExplorerInterface
 		this.maze = maze;
 	}
 	
+	public Explorer(Maze maze) {
+		this.maze = maze;
+		this.x = 1;
+		this.y = maze.height;
+	}
+	
 	/* (non-Javadoc)
 	 * @see ExplorerInterface#setMaze(Maze)
 	 */
