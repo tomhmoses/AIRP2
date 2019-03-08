@@ -14,8 +14,8 @@ import org.graphstream.algorithm.AStar;
 public class MazeExploration
 {
 
-	private static Boolean withRobot = false;
-	private static Maze maze;
+	private Boolean withRobot = false;
+	private Maze maze;
 	
 	/**
 	 * used to demo exploring the maze using an explorer with a map and with no delay
@@ -36,8 +36,8 @@ public class MazeExploration
 	 */
 	public MazeExploration(Maze maze, Maze mapMaze, int delay) throws UnknownHostException, IOException {
 		this.maze = maze;
-		this.maze.setExplorer(new ExplorerWithMap(delay, delay, this.maze));
-		this.maze.explorer.setMaze(mapMaze);
+		this.maze.setExplorer(new ExplorerWithMap(1, maze.height, maze));
+		this.maze.explorer.setMapMaze(mapMaze);
 		exploreMaze(delay);
 	}
 	
@@ -53,7 +53,7 @@ public class MazeExploration
 	}
 	
 	
-	public static void exploreMaze(int delay) throws UnknownHostException, IOException
+	public void exploreMaze(int delay) throws UnknownHostException, IOException
 	{
 		Deque<int[]> visitStack = new ArrayDeque<>();
 		Boolean stillToVisit = true;
@@ -134,11 +134,11 @@ public class MazeExploration
 		
 	}
 	
-	private static String myToString(int[] position) {
+	private String myToString(int[] position) {
 		return "[" + Integer.toString(position[0]) + "," + Integer.toString(position[1]) + "]";
 	}
 	
-	private static int[] myToIntArr(String string) {
+	private int[] myToIntArr(String string) {
 		int[] position = new int[2];
 		string = string.substring(1, string.length()-1);
 		String[] posString = string.split(",");
@@ -149,7 +149,7 @@ public class MazeExploration
 		return position;
 	}
 
-	private static void travelTo(int[] goalPos, Maze maze) throws UnknownHostException, IOException
+	private void travelTo(int[] goalPos, Maze maze) throws UnknownHostException, IOException
 	{
 		int[] currentPos = maze.getCurrentCell().position;
 		Graph graph = maze.getGraph();
@@ -186,7 +186,7 @@ public class MazeExploration
 		}
 	}
 
-	private static String[] toDirectionArray(org.graphstream.graph.Path path)
+	private String[] toDirectionArray(org.graphstream.graph.Path path)
 	{
 		String[] directions;
 		if (path.size() > 1) {
@@ -226,7 +226,7 @@ public class MazeExploration
 		return directions;
 	}
 
-	private static void sendMaze() {
+	private void sendMaze() {
         try
         {
             new EV3Server(maze);
