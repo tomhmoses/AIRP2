@@ -83,6 +83,10 @@ public class Juan implements RobotInterface
 		LCD.clear();
 		//Sound.setVolume(1);
 	}
+	
+	public LCDOut(String string, int line) {
+		LCD.drawString(string, 0, line);
+	}
 
 	public void MoveNorth()
 	{
