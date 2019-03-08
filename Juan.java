@@ -195,54 +195,51 @@ public class Juan implements RobotInterface
 	@Override
 	public Boolean[] getCurrentWalls()
 	{
+		Double RightDistance = null;
+		Double ForwardDistance = null;
+		Double LeftDistance = null;
+		
+		SPIN_MOTOR.rotate(-90);
+		RightDistance = IR_SENSOR.getDistance();
+		SPIN_MOTOR.rotate(90);
+		ForwardDistance = IR_SENSOR.getDistance();
+		SPIN_MOTOR.rotate(90);
+		LeftDistance = IR_SENSOR.getDistance();
+		SPIN_MOTOR.rotate(-90);
+		
 		Double NorthDistance = null;
 		Double EastDistance = null;
 		Double SouthDistance = null;
 		Double WestDistance = null;
-
+		
 		if (currentDirection == "N")
 		{
-			NorthDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
-			EastDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
+			NorthDistance = ForwardDistance;
+			EastDistance = RightDistance;
 			SouthDistance = null;
-			SPIN_MOTOR.rotate(90);
-			WestDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
+			WestDistance = LeftDistance;
+			
 		}
 		else if (currentDirection == "E")
 		{
-			EastDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
-			SouthDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
+			NorthDistance = LeftDistance;
+			EastDistance = ForwardDistance;
+			SouthDistance = RightDistance;
 			WestDistance = null;
-			SPIN_MOTOR.rotate(90);
-			NorthDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
 		}
 		else if (currentDirection == "S")
 		{
-			SouthDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
-			WestDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
 			NorthDistance = null;
-			SPIN_MOTOR.rotate(90);
-			EastDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
+			EastDistance = LeftDistance;
+			SouthDistance = ForwardDistance;
+			WestDistance = RightDistance;
 		}
 		else if (currentDirection == "W")
 		{
-			WestDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
-			NorthDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
+			NorthDistance = RightDistance;
 			EastDistance = null;
-			SPIN_MOTOR.rotate(90);
-			SouthDistance = IR_SENSOR.getDistance();
-			SPIN_MOTOR.rotate(90);
+			SouthDistance = LeftDistance;
+			WestDistance = ForwardDistance;
 		}
 
 		
