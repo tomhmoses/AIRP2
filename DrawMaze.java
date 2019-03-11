@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import lejos.utility.Delay;
+
 
 class MazeCanvas extends JPanel implements Runnable
 {
@@ -177,6 +177,13 @@ public class DrawMaze extends JFrame
 		pack();
 	}
 	
+	public DrawMaze(Maze maze, Boolean remote)
+	{
+		MazeCanvas mazeCanvas = new MazeCanvas(800, 800, maze, remote);
+		add(mazeCanvas);
+		pack();
+	}
+	
 	private static void MoveInMazeDemo() {
 		Maze maze = new Maze(9, 6);
 		
@@ -201,11 +208,11 @@ public class DrawMaze extends JFrame
 	private static void HTMLMazeDemo() {
 		try
 		{
-			Maze mapMaze = new Maze("maze3.html");
+			Maze mapMaze = new Maze("maze1.html");
 			Maze maze = new Maze(mapMaze.width, mapMaze.height);
 			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
-			delay(5000);
+			delay(2000);
 			new MazeExploration(maze, mapMaze, 1);
 		}
 		catch (IOException e)
@@ -238,9 +245,8 @@ public class DrawMaze extends JFrame
 	private static void RemoteMazeViewer() {
 		//sets a temp Maze
 		Maze maze = new Maze(9,6);
-		new DrawMaze(maze).setVisible(true);
-		Delay.msDelay(10000);
-		System.exit(0);
+		new DrawMaze(maze, true).setVisible(true);
+		
 	}
 
 	private static void delay()
@@ -269,7 +275,7 @@ public class DrawMaze extends JFrame
 
 	public static void main(String[] a)
 	{
-		CSVMazeDemo();
-		
+		RemoteMazeViewer();
+		//HTMLMazeDemo();
 	}
 }
