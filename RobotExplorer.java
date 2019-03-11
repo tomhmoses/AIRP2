@@ -57,5 +57,17 @@ public class RobotExplorer extends Explorer
 	public Boolean[] getCurrentWalls() {
 		return robot.getCurrentWalls();
 	}
+	
+	public void out(String string, int line)
+	{
+		robot.LCDOut(string, line);
+		
+	}
+	
+	public void send(Object obj)
+	{
+		robot.send(obj);
+		
+	}
 
 }
