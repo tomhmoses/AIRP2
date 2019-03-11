@@ -7,7 +7,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -222,7 +224,8 @@ public class Maze
 		return layout[this.explorer.x - 1][this.explorer.y];
 	}
 	
-	public Graph getGraph() {
+	
+	public Graph getGraphStreamGraph() {
 		Graph graph = new SingleGraph("Maze Graph");
 		for (int x = 1; x <= this.width; x++) {
 			for (int y = 1; y <= this.height; y++) {
@@ -242,4 +245,7 @@ public class Maze
 		
 		return graph;
 	}
+	
+	
+	
 }

@@ -5,10 +5,19 @@
  *
  */
 public class ExplorerWithMap extends Explorer {
+	
+	private String lastDirection;
     
 	public ExplorerWithMap(int x, int y, Maze maze)
 	{
 		super(x, y, maze);
+		// TODO Auto-generated constructor stub
+	}
+
+	public ExplorerWithMap(int x, int y, Maze maze, Maze mapMaze)
+	{
+		super(x, y, maze);
+		setMapMaze(mapMaze);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,7 +28,23 @@ public class ExplorerWithMap extends Explorer {
 	}
 	
 	public Boolean[] getCurrentWalls() {
-		return mapMaze.layout[this.x][this.y].getWalls();
+		Boolean[] walls = mapMaze.layout[this.x][this.y].getWalls();
+		// we don't look behind ourselves
+		System.out.println(lastDirection);
+		if (lastDirection == "N") {
+			walls[0] = null;
+		}
+		else if (lastDirection == "E") {
+			walls[1] = null;
+		}
+		else if (lastDirection == "S") {
+			walls[2] = null;
+		}
+		else if (lastDirection == "W") {
+			walls[3] = null;
+			System.out.println("returned null for west");
+		}
+		return walls;
 	}
 	
 	public Boolean reachedGoal() {

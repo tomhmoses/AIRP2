@@ -6,10 +6,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import org.graphstream.graph.*;
-
-import lejos.robotics.pathfinding.Path;
-
 import org.graphstream.algorithm.AStar;
+
 
 public class MazeExploration
 {
@@ -36,8 +34,7 @@ public class MazeExploration
 	 */
 	public MazeExploration(Maze maze, Maze mapMaze, int delay) throws UnknownHostException, IOException {
 		this.maze = maze;
-		this.maze.setExplorer(new ExplorerWithMap(1, maze.height, maze));
-		this.maze.explorer.setMapMaze(mapMaze);
+		this.maze.setExplorer(new ExplorerWithMap(1, maze.height, maze, mapMaze));
 		exploreMaze(delay);
 	}
 	
@@ -149,17 +146,19 @@ public class MazeExploration
 		return position;
 	}
 
-	private void travelTo(int[] goalPos, Maze maze) throws UnknownHostException, IOException
+	private void travelTo(int[] goalPos, Maze maze)
 	{
 		int[] currentPos = maze.getCurrentCell().position;
-		Graph graph = maze.getGraph();
+		
+		Graph graph = maze.getGraphStreamGraph();
 		AStar astar = new AStar(graph);
-		//astar.setCosts(new Costs());
 		astar.compute(myToString(currentPos), myToString(goalPos));
-		org.graphstream.graph.Path path = astar.getShortestPath();
+		Path path = astar.getShortestPath();
 		String[] directions = toDirectionArray(path);
+		 
+		//String[] directions = getDirections(goalPos, maze);
 		for (int i = 0; i < directions.length; i++) {
-			System.out.println("Moving " + directions[i]);
+			//System.out.println("Moving " + directions[i]);
 			if (directions[i] == "N") {
 				maze.explorer.MoveNorth();
 			}
@@ -185,6 +184,15 @@ public class MazeExploration
 			}
 		}
 	}
+
+	/*
+	private String[] getDirections(int[] goalPos, Maze maze)
+	{
+		int[] currentPos = maze.getCurrentCell().position;
+		//create vertex set
+		for 
+	}
+	*/
 
 	private String[] toDirectionArray(org.graphstream.graph.Path path)
 	{
@@ -227,15 +235,9 @@ public class MazeExploration
 	}
 
 	private void sendMaze() {
-        try
-        {
-            new EV3Server(maze);
-        }
-        catch (IOException e)
-        {
-            // TODO get it to print the LCD saying it failed
-            e.printStackTrace();
-           
-        }
+		Boolean send = true;
+		if (send) {
+			maze.explorer.send(maze);
+		}
     }
 }

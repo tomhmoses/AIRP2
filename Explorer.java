@@ -5,6 +5,7 @@ public abstract class Explorer implements ExplorerInterface
 	public int y;
 	private Maze maze;
 	public Object robot;
+	private String lastDirection;
 	
 	public Explorer(int x, int y, Maze maze) {
 		this.x = x;
@@ -40,6 +41,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveNorth() {
+		lastDirection = "N";
 		this.y = this.y - 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -49,6 +51,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveSouth() {
+		lastDirection = "S";
 		this.y = this.y + 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -58,6 +61,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveEast() {
+		lastDirection = "E";
 		this.x = this.x + 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -67,9 +71,24 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveWest() {
+		lastDirection = "W";
 		this.x = this.x - 1;
 		maze.getCurrentCell().setVisited(true);
 	}
+
+	public void out(String string, int line)
+	{
+		System.out.println(string);
+		
+	}
+
+	public void send(Object obj)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+
 	
 	
 }

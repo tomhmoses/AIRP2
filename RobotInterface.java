@@ -1,3 +1,4 @@
+import lejos.hardware.lcd.LCD;
 
 /**
  * Juan is a robot
@@ -9,6 +10,10 @@
 public interface RobotInterface
 {
 
+	void send(Object obj);
+	
+	void LCDOut(String string, int line);
+	
 	/**
 	 * The robot will move one tile north
 	 */
