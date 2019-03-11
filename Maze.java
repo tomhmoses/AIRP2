@@ -82,9 +82,7 @@ public class Maze
 			String csv = text;
 			String[] csvRows = csv.split("\n");
 			this.height = csvRows.length - 1;
-			System.out.println(height);
 			this.width = csvRows[0].split(",").length - 1;
-			System.out.println(width);
 			createMazeLayout(width,height);
 			this.explorer = new ExplorerWithMap(1, this.height, this);
 			
