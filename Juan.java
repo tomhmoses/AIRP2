@@ -33,6 +33,7 @@ public class Juan implements RobotInterface
 	private TouchSensor TOUCH;
 	private Keys buttons;
 	private static MovePilot	pilot;
+	public EV3Server server = new EV3Server();
 	
 	
 
@@ -143,12 +144,12 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate(-90);
+			pilot.rotate(90);
 			pilot.travel(30);
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate(90);
+			pilot.rotate(-90);
 			pilot.travel(30);
 		}
 		else if (currentDirection == "E")
@@ -169,12 +170,12 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate(90);
+			pilot.rotate(-90);
 			pilot.travel(30);
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate(-90);
+			pilot.rotate(90);
 			pilot.travel(30);
 		}
 		else if (currentDirection == "E")
@@ -204,12 +205,23 @@ public class Juan implements RobotInterface
 		Double LeftDistance = null;
 		
 		SPIN_MOTOR.rotate(-90);
-		RightDistance = IR_SENSOR.getDistance();
+		LeftDistance = IR_SENSOR.getDistance();
 		SPIN_MOTOR.rotate(90);
 		ForwardDistance = IR_SENSOR.getDistance();
 		SPIN_MOTOR.rotate(90);
-		LeftDistance = IR_SENSOR.getDistance();
+		RightDistance = IR_SENSOR.getDistance();
 		SPIN_MOTOR.rotate(-90);
+		
+		LCD.clear();
+		LCD.drawString("distances:", 0, 0);
+		LCD.drawString("left: " + LeftDistance.toString(), 0, 1);
+		LCD.drawString("forward: " + ForwardDistance.toString(), 0, 2);
+		LCD.drawString("right: " + RightDistance.toString(), 0, 3);
+		LCD.drawString("current Dir: " + currentDirection, 0, 5);
+		
+		LCD.drawString("waiting for button press:", 0, 6);
+		buttons.waitForAnyPress();
+		LCD.drawString("                         ", 0, 6);
 		
 		Double NorthDistance = null;
 		Double EastDistance = null;
@@ -245,19 +257,74 @@ public class Juan implements RobotInterface
 			SouthDistance = LeftDistance;
 			WestDistance = ForwardDistance;
 		}
+		
+		
+		
 
 		
 		Double[] distArray = new Double[] {NorthDistance, EastDistance, SouthDistance, WestDistance};
-		Boolean[] boolArray = new Boolean[4];
-		
+		LCD.clear();
+		LCD.drawString("dist array: NESW", 0, 0);
+		String temp;
 		for (int i = 0; i<4; i++) {
-			if (distArray[i] > 0) {
+			if (distArray[i] == null)
+			{
+				temp = "null";
+			}
+			else
+			{
+				temp = distArray[i].toString();
+			}
+			LCD.drawString(temp, 0, i + 1);
+		}
+		LCD.drawString("waiting for button press:", 0, 6);
+		buttons.waitForAnyPress();
+		LCD.drawString("                         ", 0, 6);
+		
+		
+		Boolean[] boolArray = new Boolean[4];
+		LCD.clear();
+		LCD.drawString("Walls: NESW", 0, 0);
+		for (int i = 0; i<4; i++) {
+			if (distArray[i] == null)
+			{
+				boolArray[i] = null;
+			}
+			else if (distArray[i] < 30 /* || distArray[i].toString() == "Infinity" */) {
 				boolArray[i] = true;
-			} else {
+			}
+			else 
+			{
 				boolArray[i] = false;
 			}
+			if (boolArray[i] == null)
+			{
+				temp = "null";
+			}
+			else
+			{
+				temp = boolArray[i].toString();
+			}
+			LCD.drawString(temp, 0, i + 1);
+		}
+		LCD.drawString("waiting for button press:", 0, 6);
+		buttons.waitForAnyPress();
+		LCD.drawString("                         ", 0, 6);
+		return boolArray;
+	}
+
+	@Override
+	public void send(Object obj)
+	{
+		try
+		{
+			server.send(obj);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return boolArray;
 	}
 }
