@@ -19,7 +19,7 @@ class MazeCanvas extends JPanel implements Runnable
 	int		rows;
 	int		columns;
 	Maze	maze;
-	Boolean remote = false;
+	boolean remote = false;
 	EV3Client client = new EV3Client();
 
 	public MazeCanvas(int w, int h, Maze maze)
@@ -33,7 +33,7 @@ class MazeCanvas extends JPanel implements Runnable
 		runThread.start();
 	}
 	
-	public MazeCanvas(int w, int h, Maze maze, Boolean remote)
+	public MazeCanvas(int w, int h, Maze maze, boolean remote)
 	{
 		this.remote = remote;
 		// TODO: figure out if this is the right way to instanciate the client:
@@ -277,10 +277,11 @@ public class DrawMaze extends JFrame
 	{
 		try
 		{
-			TimeUnit.MILLISECONDS.sleep(1);
+			Thread.sleep(100);
 		}
 		catch (InterruptedException e)
 		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -289,17 +290,21 @@ public class DrawMaze extends JFrame
 	{
 		try
 		{
-			TimeUnit.MILLISECONDS.sleep(milliseconds);
+			if (milliseconds > 100) {
+				Thread.sleep(milliseconds);
+			}
+			
 		}
 		catch (InterruptedException e)
 		{
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public static void main(String[] a)
 	{
-		//RemoteMazeViewer();
-		HTMLMazeDemo();
+		RemoteMazeViewer();
+		//HTMLMazeDemo();
 	}
 }
