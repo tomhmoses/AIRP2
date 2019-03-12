@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 import lejos.robotics.Color;
