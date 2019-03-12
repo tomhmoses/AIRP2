@@ -4,6 +4,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketImpl;
 
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Button;
@@ -33,7 +34,7 @@ public class Juan implements RobotInterface
 	private TouchSensor TOUCH;
 	private Keys buttons;
 	private static MovePilot	pilot;
-	public EV3Server server = new EV3Server();
+	private ObjectOutputStream oOut;
 	
 	private int travelAmount = 40;
 	private int turnAmount = 90;
@@ -53,8 +54,20 @@ public class Juan implements RobotInterface
 		BRICK = (EV3) BrickFinder.getLocal();
 
 		Sound.beepSequenceUp();
+	
+		LCD.drawString("starting server...", 0, 0);
+		
+		try
+		{
+			setupServer();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		LCD.drawString("Press my button,", 0, 0);
+		LCD.drawString("Press my button,  ", 0, 0);
 		LCD.drawString("turn me on ;)", 0, 1);
 		LCD.drawString("vJuan.3.31.9", 0, 2);
 
@@ -315,13 +328,38 @@ public class Juan implements RobotInterface
 		LCD.drawString("                         ", 0, 6);
 		return boolArray;
 	}
+	
+	private void setupServer() throws IOException
+	{
+		
+		ServerSocket server = new ServerSocket(1245);
+		System.out.println("Awaiting client..");
+		Socket client = server.accept();
+		System.out.println("CONNECTED");
+		OutputStream out = client.getOutputStream();
+		oOut = new ObjectOutputStream(out);
+		DataOutputStream dOut = new DataOutputStream(out);
+		//dOut.writeUTF("Battery: " + Battery.getVoltage());
+		dOut.flush();
+		//server.close();
+	}
+	
 
 	@Override
 	public void send(Object obj)
 	{
 		try
 		{
-			server.send(obj);
+			oOut.writeObject(obj);
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        try
+		{
+			oOut.flush();
 		}
 		catch (IOException e)
 		{

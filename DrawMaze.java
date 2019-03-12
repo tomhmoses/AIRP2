@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.net.Socket;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +23,9 @@ class MazeCanvas extends JPanel implements Runnable
 	int		columns;
 	Maze	maze;
 	boolean remote = false;
-	EV3Client client = new EV3Client();
+	//EV3Client client = new EV3Client();
+	ObjectInputStream oIn;
+	Socket sock;
 
 	public MazeCanvas(int w, int h, Maze maze)
 	{
@@ -37,7 +42,15 @@ class MazeCanvas extends JPanel implements Runnable
 	{
 		this.remote = remote;
 		// TODO: figure out if this is the right way to instanciate the client:
-		this.client = new EV3Client();
+		try
+		{
+			setupClient();
+		}
+		catch (IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.rows = maze.height;
 		this.columns = maze.width;
 		this.maze = maze;
@@ -179,7 +192,9 @@ class MazeCanvas extends JPanel implements Runnable
                 // should just wait until it receives the maze
                 try
                 {
-                    this.maze = client.getMaze();
+                	System.out.println("WAITING for maze");
+                    this.maze = getMaze();
+                    System.out.println("I have got the maze");
                 }
                 catch (ClassNotFoundException | IOException e)
                 {
@@ -190,6 +205,21 @@ class MazeCanvas extends JPanel implements Runnable
             this.repaint();
         }
     }
+    
+    private void setupClient() throws IOException {
+    	System.out.println("waiting for connection");
+	    String ip = "10.0.1.1"; // BT
+	    sock = new Socket(ip, 1245);
+	    System.out.println("Connected");
+	    InputStream in = sock.getInputStream();
+		oIn = new ObjectInputStream(in);
+    }
+    
+    public Maze getMaze() throws ClassNotFoundException, IOException {
+    	Maze obj = (Maze) oIn.readObject();
+        return obj;
+    }
+    
 }
 
 public class DrawMaze extends JFrame
@@ -201,7 +231,7 @@ public class DrawMaze extends JFrame
 		pack();
 	}
 	
-	public DrawMaze(Maze maze, Boolean remote)
+	public DrawMaze(Maze maze, boolean remote)
 	{
 		MazeCanvas mazeCanvas = new MazeCanvas(800, 800, maze, remote);
 		add(mazeCanvas);
