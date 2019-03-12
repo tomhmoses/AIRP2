@@ -1,3 +1,4 @@
+import java.io.Serializable;
 import java.util.Arrays;
 
 import lejos.hardware.port.Port;
@@ -6,6 +7,7 @@ import lejos.robotics.Color;
 
 public class ColorSensor extends EV3ColorSensor
 {
+
 
 	public ColorSensor(Port port)
 	{

@@ -1,6 +1,11 @@
+import java.io.Serializable;
 
-public abstract class Explorer implements ExplorerInterface
+public class Explorer implements ExplorerInterface, Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8712892122643470242L;
 	public int x;
 	public int y;
 	private Maze maze;
@@ -11,6 +16,12 @@ public abstract class Explorer implements ExplorerInterface
 		this.x = x;
 		this.y = y;
 		this.maze = maze;
+	}
+	
+	public Explorer(int x, int y, String lastDirection) {
+		this.x = x;
+		this.y = y;
+		this.lastDirection = lastDirection;
 	}
 	
 	public Explorer(Maze maze) {
@@ -41,7 +52,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveNorth() {
-		lastDirection = "N";
+		this.lastDirection = "N";
 		this.y = this.y - 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -51,7 +62,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveSouth() {
-		lastDirection = "S";
+		this.lastDirection = "S";
 		this.y = this.y + 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -61,7 +72,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveEast() {
-		lastDirection = "E";
+		this.lastDirection = "E";
 		this.x = this.x + 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -71,7 +82,7 @@ public abstract class Explorer implements ExplorerInterface
 	 */
 	@Override
 	public void MoveWest() {
-		lastDirection = "W";
+		this.lastDirection = "W";
 		this.x = this.x - 1;
 		maze.getCurrentCell().setVisited(true);
 	}
@@ -83,6 +94,26 @@ public abstract class Explorer implements ExplorerInterface
 	}
 
 	public void send(Object obj)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Boolean[] getCurrentWalls()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Boolean reachedGoal()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void drawMazeOnLCD(Maze maze2)
 	{
 		// TODO Auto-generated method stub
 		

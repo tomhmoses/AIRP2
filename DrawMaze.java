@@ -79,6 +79,7 @@ class MazeCanvas extends JPanel implements Runnable
 		
 		//draw each cell background
 		Color pRed = new Color(255,189,189);
+		Color pGray = new Color(230,230,230);
 		Color pGreen = new Color(225,247,213);
 		Color pPink = new Color(241,203,255);
 		Color pBlue = new Color(201,201,255);
@@ -119,7 +120,7 @@ class MazeCanvas extends JPanel implements Runnable
 				cell = maze.layout[x][y];
 				//set East Wall colour
 				if (cell.EWall == null) {
-					g.setColor(Color.gray);
+					g.setColor(pGray);
 					drawLine = true;
 				}
 				else if (cell.EWall == true) {
@@ -136,7 +137,7 @@ class MazeCanvas extends JPanel implements Runnable
 				
 				//set South Wall colour
 				if (cell.SWall == null) {
-					g.setColor(Color.gray);
+					g.setColor(pGray);
 					drawLine = true;
 				}
 				else if (cell.SWall == true) {

@@ -1,9 +1,12 @@
+import java.io.Serializable;
+
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 
 public class IRSensor extends EV3IRSensor
 {
 	
+
 	public IRSensor(Port port) {
 		super(port);
 	}

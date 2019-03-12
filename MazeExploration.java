@@ -14,6 +14,7 @@ public class MazeExploration
 
 	private Boolean withRobot = false;
 	private Maze maze;
+	private Cell goalCell;
 	
 	/**
 	 * used to demo exploring the maze using an explorer with a map and with no delay
@@ -118,16 +119,20 @@ public class MazeExploration
 			if (withRobot) {
 				sendMaze();
 			}
-			if (visitStack.size() == 0 || maze.explorer.reachedGoal()) {
+			if (visitStack.size() == 0) {
 				stillToVisit = false;
 			}
 		}
 		if (maze.explorer.reachedGoal()) {
 			maze.getCurrentCell().type = "goal";
-			travelTo(new int[] {1, maze.height}, maze);
+			goalCell = maze.getCurrentCell();
 		}
 		
-		System.out.println("finished");
+		System.out.println("finished exploring");
+		if (goalCell != null)
+		{
+			maze.explorer.teleportTo(goalCell.position);
+		}
 		
 	}
 	
@@ -235,9 +240,13 @@ public class MazeExploration
 	}
 
 	private void sendMaze() {
+		maze.explorer.drawMazeOnLCD(maze);
 		boolean send = true;
 		if (send) {
-			maze.explorer.send(maze);
+			Explorer sendingExplorer = new Explorer(maze.explorer.x, maze.explorer.y, maze.explorer.lastDirection);
+			Maze sendingMaze = new Maze(maze.width, maze.height, sendingExplorer);
+			sendingMaze.layout = maze.layout;
+			maze.explorer.send(sendingMaze);
 		}
     }
 }

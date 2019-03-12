@@ -12,7 +12,7 @@ public class EV3Client
 		{
         	System.out.println("waiting for connection");
             String ip = "10.0.1.1"; // BT
-            sock = new Socket(ip, EV3Server.port);
+            sock = new Socket(ip, 1245);
             System.out.println("Connected");
             InputStream in = sock.getInputStream();
 			oIn = new ObjectInputStream(in);

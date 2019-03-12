@@ -2,6 +2,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketImpl;
@@ -22,6 +23,7 @@ import lejos.robotics.navigation.MovePilot;
 
 public class Juan implements RobotInterface
 {
+
 	private String				currentDirection	= "N";
 	
 	private EV3LargeRegulatedMotor SPIN_MOTOR;
@@ -29,15 +31,13 @@ public class Juan implements RobotInterface
 	private EV3LargeRegulatedMotor RIGHT_MOTOR;
 	private EV3 BRICK;
 	private IRSensor IR_SENSOR;
-	private ColorSensor LEFT_COLOR;
 	private ColorSensor RIGHT_COLOR;
-	private TouchSensor TOUCH;
 	private Keys buttons;
 	private static MovePilot	pilot;
 	private ObjectOutputStream oOut;
 	
 	private int travelAmount = 40;
-	private int turnAmount = 90;
+	private int turnAmount = 80;
 	
 	
 
@@ -88,9 +88,7 @@ public class Juan implements RobotInterface
 		Chassis chassis = new WheeledChassis(new Wheel[] { LEFT_WHEEL, RIGHT_WHEEL }, WheeledChassis.TYPE_DIFFERENTIAL);
 		pilot = new MovePilot(chassis);
 
-		LEFT_COLOR = new ColorSensor(BRICK.getPort("S2"));
 		RIGHT_COLOR = new ColorSensor(BRICK.getPort("S3"));
-		TOUCH = new TouchSensor(BRICK.getPort("S1"));
 		IR_SENSOR = new IRSensor(BRICK.getPort("S4"));
 
 		double SPEED = 10;
@@ -114,7 +112,7 @@ public class Juan implements RobotInterface
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate(turnAmount*2);
+			pilot.rotate((turnAmount*2)+5);
 			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "E")
@@ -135,7 +133,7 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate(turnAmount*2);
+			pilot.rotate((turnAmount*2)+5);
 			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "S")
@@ -174,7 +172,7 @@ public class Juan implements RobotInterface
 		}
 		else if (currentDirection == "W")
 		{
-			pilot.rotate(turnAmount*2);
+			pilot.rotate((turnAmount*2)+5);
 			pilot.travel(travelAmount);
 		}
 
@@ -196,7 +194,7 @@ public class Juan implements RobotInterface
 		}
 		else if (currentDirection == "E")
 		{
-			pilot.rotate(turnAmount*2);
+			pilot.rotate((turnAmount*2)+5);
 			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "W")
@@ -333,9 +331,9 @@ public class Juan implements RobotInterface
 	{
 		
 		ServerSocket server = new ServerSocket(1245);
-		System.out.println("Awaiting client..");
+		LCDOut("Awaiting client..", 0);
 		Socket client = server.accept();
-		System.out.println("CONNECTED");
+		LCDOut("Connected", 1);
 		OutputStream out = client.getOutputStream();
 		oOut = new ObjectOutputStream(out);
 		DataOutputStream dOut = new DataOutputStream(out);
@@ -351,15 +349,9 @@ public class Juan implements RobotInterface
 		try
 		{
 			oOut.writeObject(obj);
-		}
-		catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        try
-		{
 			oOut.flush();
+			oOut.reset();
+			
 		}
 		catch (IOException e)
 		{
@@ -369,14 +361,16 @@ public class Juan implements RobotInterface
 		
 	}
 	
-	
 	public void drawMazeOnLCD(Maze maze)
 	{
 		Cell cell;
 		int xDraw;
 		int yDraw;
+		final int xMod = 65;
+		final int yMod = 50;
 		final int BLACK = 1;
 		final int WHITE = 0;
+		final int SCALE = 10;
 		
 		//should be top left
 		LCD.setPixel(2, 2, BLACK);
@@ -384,24 +378,59 @@ public class Juan implements RobotInterface
 		for (int x = 0; x <= maze.width; x++) {
 			for (int y = 0; y <= maze.height; y++) {
 				cell = maze.layout[x][y];
-				xDraw = (x*2) + 5;
-				yDraw = (y*2) + 5;
-				LCD.setPixel(xDraw + 1, yDraw + 1, BLACK);
-				if (cell.SWall != null)
+				xDraw = (x*SCALE) + xMod;
+				yDraw = (y*SCALE) + yMod;
+				LCD.setPixel(xDraw + SCALE - 1, yDraw + SCALE - 1, BLACK);
+				if (cell.type == "edge")
 				{
-					if (cell.SWall == true)
+					for (int i = 0; i < SCALE; i++)
 					{
-						LCD.setPixel(xDraw, yDraw + 1, BLACK);
+						for (int j = 0; j < SCALE; j++)
+						{
+							LCD.setPixel(xDraw + i, yDraw + j, BLACK);
+						}
 					}
 				}
-				if (cell.EWall != null)
+				else
 				{
-					if (cell.SWall == true)
+					if (cell.SWall != null)
 					{
-						LCD.setPixel(xDraw + 1, yDraw, BLACK);
+						if (cell.SWall == true)
+						{
+							for (int i = 0; i < SCALE - 1; i++)
+							{
+								LCD.setPixel(xDraw + i, yDraw + SCALE - 1, BLACK);
+							}
+						}
+					}
+					if (cell.EWall != null)
+					{
+						if (cell.EWall == true)
+						{
+							for (int i = 0; i < SCALE - 1; i++)
+							{
+								LCD.setPixel(xDraw + SCALE - 1, yDraw + i, BLACK);
+							}
+						}
 					}
 				}
 			}
 		}
+		//draw border right and bottom
+		for (int i = 0; i < SCALE * (maze.width + 1); i++)
+		{
+			for (int j = 0; j < SCALE; j++)
+			{
+				LCD.setPixel(xMod + i, yMod + (SCALE * (maze.height + 1)) + j, BLACK);
+			}
+		}
+		for (int i = 0; i < SCALE; i++)
+		{
+			for (int j = 0; j < SCALE* (maze.height + 2); j++)
+			{
+				LCD.setPixel(xMod + (SCALE * (maze.width + 1)) + i, yMod + j, BLACK);
+			}
+		}
 	}
+	
 }

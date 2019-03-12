@@ -1,11 +1,13 @@
+import java.io.Serializable;
 
 public class RobotExplorer extends Explorer
 {
-
 	public int x;
 	public int y;
 	private Maze maze;
 	RobotInterface robot;
+	public String lastDirection;
+	
 	
 	public RobotExplorer(int x, int y, Maze maze)
 	{
@@ -67,6 +69,12 @@ public class RobotExplorer extends Explorer
 	public void send(Object obj)
 	{
 		robot.send(obj);
+		
+	}
+	
+	public void drawMazeOnLCD(Maze maze)
+	{
+		robot.drawMazeOnLCD(maze);
 		
 	}
 

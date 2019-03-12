@@ -1,3 +1,4 @@
+import java.io.Serializable;
 
 /**
  * <p>
@@ -11,8 +12,13 @@
  * <li> a south wall
  * </ul>
  */
-public class EdgeCell extends Cell
+public class EdgeCell extends Cell implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3394068864783269227L;
+
 	/**
 	 * <p>
 	 * Creates a cell that has:

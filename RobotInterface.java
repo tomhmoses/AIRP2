@@ -48,4 +48,6 @@ public interface RobotInterface
 	 */
 	Boolean[] getCurrentWalls();
 
+	void drawMazeOnLCD(Maze maze);
+
 }

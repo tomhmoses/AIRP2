@@ -3,6 +3,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -28,8 +29,13 @@ import org.graphstream.graph.implementations.SingleGraph;
  * <li> due to having edge cells, the usable layout starts at 1 and ends at either width or height.
  * </ul>
  */
-public class Maze
+public class Maze implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1950168016120932196L;
+
 	public Cell[][] layout;
 	
 	/**
@@ -230,12 +236,20 @@ public class Maze
 				graph.addNode(layout[x][y].getCellPositionString());
 				if (layout[x][y].getN() != null) {
 					if (layout[x][y].getN() == false) {
-						graph.addEdge(layout[x][y].getCellPositionString() + "N", layout[x][y].getCellPositionString(), layout[x][y-1].getCellPositionString());
+						try {
+							graph.addEdge(layout[x][y].getCellPositionString() + "N", layout[x][y].getCellPositionString(), layout[x][y-1].getCellPositionString());
+						}
+						catch (Exception e)
+						{}
 					}
 				}
 				if (layout[x][y].getW() != null) {
 					if (layout[x][y].getW() == false) {
-						graph.addEdge(layout[x][y].getCellPositionString() + "W", layout[x][y].getCellPositionString(), layout[x-1][y].getCellPositionString());
+						try {
+							graph.addEdge(layout[x][y].getCellPositionString() + "W", layout[x][y].getCellPositionString(), layout[x-1][y].getCellPositionString());
+						}
+						catch (Exception e)
+						{}
 					}
 				}
 			}
