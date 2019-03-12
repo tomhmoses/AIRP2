@@ -1,6 +1,5 @@
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
-import lejos.robotics.Color;
 
 public class ColorSensor extends EV3ColorSensor
 {
@@ -12,7 +11,6 @@ public class ColorSensor extends EV3ColorSensor
 		this.setCurrentMode("RGB");
 		this.getRGBMode();
 		setFloodlight(false);
-		// TODO Auto-generated constructor stub
 	}
 
 	public String getColorName()
