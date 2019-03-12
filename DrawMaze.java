@@ -7,15 +7,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.Socket;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
 
+@SuppressWarnings("serial")
 class MazeCanvas extends JPanel implements Runnable
 {
 	int		width, height;
@@ -62,9 +60,6 @@ class MazeCanvas extends JPanel implements Runnable
 
 	public void paint(Graphics g)
 	{
-		
-		Color[] colors = { Color.black, Color.blue, Color.red, Color.green, Color.orange, Color.MAGENTA };
-		
 		Graphics2D g2 = (Graphics2D) g;
 		g2.setStroke(new BasicStroke(2));
 		
@@ -199,9 +194,8 @@ class MazeCanvas extends JPanel implements Runnable
                 }
                 catch (ClassNotFoundException | IOException e)
                 {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
-                } // TODO: figure out how to receive the object
+                }
             }
             this.repaint();
         }
@@ -223,6 +217,7 @@ class MazeCanvas extends JPanel implements Runnable
     
 }
 
+@SuppressWarnings("serial")
 public class DrawMaze extends JFrame
 {
 	public DrawMaze(Maze maze)
@@ -239,6 +234,7 @@ public class DrawMaze extends JFrame
 		pack();
 	}
 	
+	@SuppressWarnings("unused")
 	private static void MoveInMazeDemo() {
 		Maze maze = new Maze(9, 6);
 		
@@ -260,6 +256,7 @@ public class DrawMaze extends JFrame
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private static void HTMLMazeDemo() {
 		try
 		{
@@ -278,11 +275,11 @@ public class DrawMaze extends JFrame
 		System.exit(0);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void CSVMazeDemo() {
 		try
 		{
 			Maze mapMaze = new Maze("SE_CSV.csv");
-			Object realMaze;
 			Maze maze = new Maze(mapMaze.width, mapMaze.height);
 			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
@@ -298,24 +295,12 @@ public class DrawMaze extends JFrame
 	}
 	
 	private static void RemoteMazeViewer() {
-		//sets a temp Maze
+		//sets a temporary Maze
 		Maze maze = new Maze(9,6);
 		new DrawMaze(maze, true).setVisible(true);
 		
 	}
 
-	private static void delay()
-	{
-		try
-		{
-			Thread.sleep(100);
-		}
-		catch (InterruptedException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	private static void delay(int milliseconds)
 	{
