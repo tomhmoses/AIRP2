@@ -2,9 +2,6 @@ import java.io.Serializable;
 
 public class Explorer implements ExplorerInterface, Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8712892122643470242L;
 	public int x;
 	public int y;
