@@ -1,5 +1,3 @@
-import java.io.Serializable;
-
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
 
