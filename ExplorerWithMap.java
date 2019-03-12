@@ -5,8 +5,9 @@
  *
  */
 public class ExplorerWithMap extends Explorer {
-	
-    
+
+	private static final long serialVersionUID = -3002769266276540973L;
+
 	public ExplorerWithMap(int x, int y, Maze maze)
 	{
 		super(x, y, maze);
