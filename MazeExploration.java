@@ -235,7 +235,7 @@ public class MazeExploration
 	}
 
 	private void sendMaze() {
-		Boolean send = true;
+		boolean send = true;
 		if (send) {
 			maze.explorer.send(maze);
 		}
