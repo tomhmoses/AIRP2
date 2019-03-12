@@ -368,4 +368,40 @@ public class Juan implements RobotInterface
 		}
 		
 	}
+	
+	
+	public void drawMazeOnLCD(Maze maze)
+	{
+		Cell cell;
+		int xDraw;
+		int yDraw;
+		final int BLACK = 1;
+		final int WHITE = 0;
+		
+		//should be top left
+		LCD.setPixel(2, 2, BLACK);
+		
+		for (int x = 0; x <= maze.width; x++) {
+			for (int y = 0; y <= maze.height; y++) {
+				cell = maze.layout[x][y];
+				xDraw = (x*2) + 5;
+				yDraw = (y*2) + 5;
+				LCD.setPixel(xDraw + 1, yDraw + 1, BLACK);
+				if (cell.SWall != null)
+				{
+					if (cell.SWall == true)
+					{
+						LCD.setPixel(xDraw, yDraw + 1, BLACK);
+					}
+				}
+				if (cell.EWall != null)
+				{
+					if (cell.SWall == true)
+					{
+						LCD.setPixel(xDraw + 1, yDraw, BLACK);
+					}
+				}
+			}
+		}
+	}
 }
