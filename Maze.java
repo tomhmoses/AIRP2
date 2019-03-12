@@ -1,16 +1,8 @@
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.PriorityQueue;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.implementations.SingleGraph;
@@ -31,9 +23,6 @@ import org.graphstream.graph.implementations.SingleGraph;
  */
 public class Maze implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1950168016120932196L;
 
 	public Cell[][] layout;
