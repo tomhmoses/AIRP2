@@ -1,5 +1,3 @@
-import lejos.hardware.lcd.LCD;
-
 /**
  * Juan is a robot
  * 
