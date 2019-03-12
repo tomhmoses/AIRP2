@@ -14,9 +14,6 @@ import java.io.Serializable;
  */
 public class EdgeCell extends Cell implements Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3394068864783269227L;
 
 	/**
