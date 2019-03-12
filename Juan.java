@@ -35,6 +35,9 @@ public class Juan implements RobotInterface
 	private static MovePilot	pilot;
 	public EV3Server server = new EV3Server();
 	
+	private int travelAmount = 40;
+	private int turnAmount = 90;
+	
 	
 
 	//IR sensor to stay 8cm away from wall
@@ -94,22 +97,22 @@ public class Juan implements RobotInterface
 		//take into account what direction it is facing and then rotate how much to move forwards
 		if (currentDirection == "N")
 		{
-			pilot.travel(30);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate(180);
-			pilot.travel(30);
+			pilot.rotate(turnAmount*2);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "E")
 		{
-			pilot.rotate(-90);
-			pilot.travel(30);
+			pilot.rotate(-turnAmount);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "W")
 		{
-			pilot.rotate(90);
-			pilot.travel(30);
+			pilot.rotate(turnAmount);
+			pilot.travel(travelAmount);
 		}
 
 		currentDirection = "N";
@@ -119,22 +122,22 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate(180);
-			pilot.travel(30);
+			pilot.rotate(turnAmount*2);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.travel(30);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "E")
 		{
-			pilot.rotate(90);
-			pilot.travel(30);
+			pilot.rotate(turnAmount);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "W")
 		{
-			pilot.rotate(-90);
-			pilot.travel(30);
+			pilot.rotate(-turnAmount);
+			pilot.travel(travelAmount);
 		}
 
 		currentDirection = "S";
@@ -144,22 +147,22 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate(90);
-			pilot.travel(30);
+			pilot.rotate(turnAmount);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate(-90);
-			pilot.travel(30);
+			pilot.rotate(-turnAmount);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "E")
 		{
-			pilot.travel(30);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "W")
 		{
-			pilot.rotate(180);
-			pilot.travel(30);
+			pilot.rotate(turnAmount*2);
+			pilot.travel(travelAmount);
 		}
 
 		currentDirection = "E";
@@ -170,22 +173,22 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate(-90);
-			pilot.travel(30);
+			pilot.rotate(-turnAmount);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate(90);
-			pilot.travel(30);
+			pilot.rotate(turnAmount);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "E")
 		{
-			pilot.rotate(180);
-			pilot.travel(30);
+			pilot.rotate(turnAmount*2);
+			pilot.travel(travelAmount);
 		}
 		else if (currentDirection == "W")
 		{
-			pilot.travel(30);
+			pilot.travel(travelAmount);
 		}
 
 		currentDirection = "W";
@@ -220,7 +223,7 @@ public class Juan implements RobotInterface
 		LCD.drawString("current Dir: " + currentDirection, 0, 5);
 		
 		LCD.drawString("waiting for button press:", 0, 6);
-		buttons.waitForAnyPress();
+		//buttons.waitForAnyPress();
 		LCD.drawString("                         ", 0, 6);
 		
 		Double NorthDistance = null;
@@ -278,7 +281,7 @@ public class Juan implements RobotInterface
 			LCD.drawString(temp, 0, i + 1);
 		}
 		LCD.drawString("waiting for button press:", 0, 6);
-		buttons.waitForAnyPress();
+		//buttons.waitForAnyPress();
 		LCD.drawString("                         ", 0, 6);
 		
 		
@@ -290,7 +293,7 @@ public class Juan implements RobotInterface
 			{
 				boolArray[i] = null;
 			}
-			else if (distArray[i] < 30 /* || distArray[i].toString() == "Infinity" */) {
+			else if (distArray[i] < 30) {
 				boolArray[i] = true;
 			}
 			else 
@@ -308,7 +311,7 @@ public class Juan implements RobotInterface
 			LCD.drawString(temp, 0, i + 1);
 		}
 		LCD.drawString("waiting for button press:", 0, 6);
-		buttons.waitForAnyPress();
+		//buttons.waitForAnyPress();
 		LCD.drawString("                         ", 0, 6);
 		return boolArray;
 	}
