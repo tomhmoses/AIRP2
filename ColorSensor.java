@@ -1,4 +1,3 @@
-import java.io.Serializable;
 import java.util.Arrays;
 
 import lejos.hardware.port.Port;
