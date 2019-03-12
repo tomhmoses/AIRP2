@@ -1,7 +1,9 @@
 public class RobotExplorer extends Explorer
 {
+	private static final long serialVersionUID = 1489466840435691280L;
 	public int x;
 	public int y;
+	@SuppressWarnings("unused")
 	private Maze maze;
 	RobotInterface robot;
 	public String lastDirection;
