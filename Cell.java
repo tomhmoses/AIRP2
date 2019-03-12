@@ -23,9 +23,6 @@ import java.io.Serializable;
  */
 public class Cell implements CellInterface, Serializable
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -7452897086311131776L;
 	//because we will work from top left we use top (north) and left (west) cells from previously defined.
 	Cell NCell;
