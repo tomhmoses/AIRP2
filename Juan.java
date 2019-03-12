@@ -2,10 +2,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketImpl;
 
 import lejos.hardware.BrickFinder;
 import lejos.hardware.Button;
@@ -15,7 +13,6 @@ import lejos.hardware.ev3.EV3;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
-import lejos.hardware.port.Port;
 import lejos.robotics.chassis.Chassis;
 import lejos.robotics.chassis.Wheel;
 import lejos.robotics.chassis.WheeledChassis;
@@ -330,6 +327,7 @@ public class Juan implements RobotInterface
 	private void setupServer() throws IOException
 	{
 		
+		@SuppressWarnings("resource")
 		ServerSocket server = new ServerSocket(1245);
 		LCDOut("Awaiting client..", 0);
 		Socket client = server.accept();
@@ -369,7 +367,6 @@ public class Juan implements RobotInterface
 		final int xMod = 65;
 		final int yMod = 50;
 		final int BLACK = 1;
-		final int WHITE = 0;
 		final int SCALE = 10;
 		
 		//should be top left
