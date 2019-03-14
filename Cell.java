@@ -31,8 +31,6 @@ public class Cell implements CellInterface, Serializable
 	Boolean EWall;
 	String type = "normal";
 	public int[] position;
-	public int DijkstraDistance;
-	public Cell DijkstraPrev;
 	
 	Boolean visited;
 	
