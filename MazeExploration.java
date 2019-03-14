@@ -119,16 +119,19 @@ public class MazeExploration
 			if (visitStack.size() == 0) {
 				stillToVisit = false;
 			}
-		}
-		if (maze.explorer.reachedGoal()) {
-			maze.getCurrentCell().type = "goal";
-			goalCell = maze.getCurrentCell();
+			if (maze.explorer.reachedGoal()) {
+				maze.getCurrentCell().type = "goal";
+				goalCell = maze.getCurrentCell();
+				maze.explorer.out("Found Goal", 6);
+			}
 		}
 		
-		System.out.println("finished exploring");
+		
+		maze.explorer.out("finished", 7);
 		if (goalCell != null)
 		{
-			maze.explorer.teleportTo(goalCell.position);
+			travelTo(goalCell.position, maze);
+			travelTo(new int[] {1, maze.height}, maze);
 		}
 		
 	}
