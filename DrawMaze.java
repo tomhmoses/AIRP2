@@ -261,6 +261,8 @@ public class DrawMaze extends JFrame
 		try
 		{
 			Maze mapMaze = new Maze("maze1.html");
+			mapMaze.layout[7][5].type = "goal";
+			mapMaze.layout[8][4].type = "danger";
 			Maze maze = new Maze(mapMaze.width, mapMaze.height);
 			new DrawMaze(mapMaze).setVisible(true);
 			new DrawMaze(maze).setVisible(true);
@@ -294,6 +296,7 @@ public class DrawMaze extends JFrame
 		System.exit(0);
 	}
 	
+	@SuppressWarnings("unused")
 	private static void RemoteMazeViewer() {
 		//sets a temporary Maze
 		Maze maze = new Maze(9,6);
@@ -320,7 +323,7 @@ public class DrawMaze extends JFrame
 
 	public static void main(String[] a)
 	{
-		RemoteMazeViewer();
-		//HTMLMazeDemo();
+		//RemoteMazeViewer();
+		HTMLMazeDemo();
 	}
 }
