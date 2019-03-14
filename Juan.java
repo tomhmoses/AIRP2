@@ -429,5 +429,12 @@ public class Juan implements RobotInterface
 			}
 		}
 	}
+
+
+	@Override
+	public Boolean onDanger()
+	{
+		return RIGHT_COLOR.onGreen();
+	}
 	
 }
