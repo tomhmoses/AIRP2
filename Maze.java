@@ -224,7 +224,7 @@ public class Maze implements Serializable
 			for (int y = 1; y <= this.height; y++) {
 				graph.addNode(layout[x][y].getCellPositionString());
 				if (layout[x][y].getN() != null) {
-					if (layout[x][y].getN() == false) {
+					if (layout[x][y].getN() == false && !layout[x][y-1].type.equals("danger")) {
 						try {
 							graph.addEdge(layout[x][y].getCellPositionString() + "N", layout[x][y].getCellPositionString(), layout[x][y-1].getCellPositionString());
 						}
@@ -233,7 +233,7 @@ public class Maze implements Serializable
 					}
 				}
 				if (layout[x][y].getW() != null) {
-					if (layout[x][y].getW() == false) {
+					if (layout[x][y].getW() == false && !layout[x-1][y].type.equals("danger")) {
 						try {
 							graph.addEdge(layout[x][y].getCellPositionString() + "W", layout[x][y].getCellPositionString(), layout[x-1][y].getCellPositionString());
 						}
