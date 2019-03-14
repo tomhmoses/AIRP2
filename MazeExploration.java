@@ -119,7 +119,10 @@ public class MazeExploration
 			if (visitStack.size() == 0) {
 				stillToVisit = false;
 			}
-			if (maze.explorer.reachedGoal()) {
+			if (maze.explorer.onDanger()) {
+				maze.getCurrentCell().type = "danger";
+			}
+			else if (maze.explorer.reachedGoal()) {
 				maze.getCurrentCell().type = "goal";
 				goalCell = maze.getCurrentCell();
 				maze.explorer.out("Found Goal", 6);
