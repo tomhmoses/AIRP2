@@ -51,7 +51,10 @@ public class Explorer implements ExplorerInterface, Serializable
 	public void MoveNorth() {
 		this.lastDirection = "N";
 		this.y = this.y - 1;
-		maze.getCurrentCell().setVisited(true);
+		if (maze.getCurrentCell().type.equals("planned"))
+		{
+			maze.getCurrentCell().setVisited(true);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -61,7 +64,10 @@ public class Explorer implements ExplorerInterface, Serializable
 	public void MoveSouth() {
 		this.lastDirection = "S";
 		this.y = this.y + 1;
-		maze.getCurrentCell().setVisited(true);
+		if (maze.getCurrentCell().type.equals("planned"))
+		{
+			maze.getCurrentCell().setVisited(true);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -71,7 +77,10 @@ public class Explorer implements ExplorerInterface, Serializable
 	public void MoveEast() {
 		this.lastDirection = "E";
 		this.x = this.x + 1;
-		maze.getCurrentCell().setVisited(true);
+		if (maze.getCurrentCell().type.equals("planned"))
+		{
+			maze.getCurrentCell().setVisited(true);
+		}
 	}
 	
 	/* (non-Javadoc)
@@ -81,7 +90,10 @@ public class Explorer implements ExplorerInterface, Serializable
 	public void MoveWest() {
 		this.lastDirection = "W";
 		this.x = this.x - 1;
-		maze.getCurrentCell().setVisited(true);
+		if (maze.getCurrentCell().type.equals("planned"))
+		{
+			maze.getCurrentCell().setVisited(true);
+		}
 	}
 
 	public void out(String string, int line)
@@ -114,6 +126,13 @@ public class Explorer implements ExplorerInterface, Serializable
 	{
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Boolean onDanger()
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
