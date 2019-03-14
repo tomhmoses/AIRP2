@@ -48,4 +48,11 @@ public interface RobotInterface
 
 	void drawMazeOnLCD(Maze maze);
 
+	/**
+	 * @return if it is on a <i>danger</i> cell
+	 * 
+	 * <p>i.e. using the <code>ColorSensor</code> to see if it is on a <b style="color:green;">green</b> tile.</p>
+	 */
+	Boolean onDanger();
+
 }
