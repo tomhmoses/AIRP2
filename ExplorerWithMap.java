@@ -50,4 +50,9 @@ public class ExplorerWithMap extends Explorer {
 	public Boolean reachedGoal() {
 		return mapMaze.layout[this.x][this.y].type.equals("goal");
 	}
+	
+	public Boolean onDanger() {
+		System.out.println("Type was: " + mapMaze.layout[this.x][this.y].type);
+		return mapMaze.layout[this.x][this.y].type.equals("danger");
+	}
 }
