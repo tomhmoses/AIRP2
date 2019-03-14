@@ -55,6 +55,10 @@ public class RobotExplorer extends Explorer
 		return robot.reachedGoal();
 	}
 	
+	public Boolean onDanger() {
+		return robot.onDanger();
+	}
+	
 	@Override
 	public Boolean[] getCurrentWalls() {
 		return robot.getCurrentWalls();
@@ -77,5 +81,7 @@ public class RobotExplorer extends Explorer
 		robot.drawMazeOnLCD(maze);
 		
 	}
+	
+	
 
 }
