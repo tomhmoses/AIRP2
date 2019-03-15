@@ -99,6 +99,12 @@ public class Juan implements RobotInterface
 	public void LCDOut(String string, int line) {
 		LCD.drawString(string, 0, line);
 	}
+	
+	private void OneEighty() {
+		pilot.rotate((turnAmount*2)+5);
+		pilot.travel(-3);
+		pilot.travel(travelAmount);
+	}
 
 	public void MoveNorth()
 	{
@@ -109,8 +115,7 @@ public class Juan implements RobotInterface
 		}
 		else if (currentDirection == "S")
 		{
-			pilot.rotate((turnAmount*2)+5);
-			pilot.travel(travelAmount);
+			OneEighty();
 		}
 		else if (currentDirection == "E")
 		{
@@ -130,8 +135,7 @@ public class Juan implements RobotInterface
 	{
 		if (currentDirection == "N")
 		{
-			pilot.rotate((turnAmount*2)+5);
-			pilot.travel(travelAmount);
+			OneEighty();
 		}
 		else if (currentDirection == "S")
 		{
@@ -169,8 +173,7 @@ public class Juan implements RobotInterface
 		}
 		else if (currentDirection == "W")
 		{
-			pilot.rotate((turnAmount*2)+5);
-			pilot.travel(travelAmount);
+			OneEighty();
 		}
 
 		currentDirection = "E";
@@ -191,8 +194,7 @@ public class Juan implements RobotInterface
 		}
 		else if (currentDirection == "E")
 		{
-			pilot.rotate((turnAmount*2)+5);
-			pilot.travel(travelAmount);
+			OneEighty();
 		}
 		else if (currentDirection == "W")
 		{
@@ -208,18 +210,27 @@ public class Juan implements RobotInterface
 		return RIGHT_COLOR.onRed();
 	}
 
+	public void shakeHead()
+	{
+		SPIN_MOTOR.rotate(-60);
+		SPIN_MOTOR.rotate(120);
+		SPIN_MOTOR.rotate(-120);
+		SPIN_MOTOR.rotate(120);
+		SPIN_MOTOR.rotate(-120);
+		SPIN_MOTOR.rotate(60);
+	}
+	
 	@Override
 	public Boolean[] getCurrentWalls()
 	{
 		Double RightDistance = null;
 		Double ForwardDistance = null;
 		Double LeftDistance = null;
-		
+
+		ForwardDistance = IR_SENSOR.getDistance();
 		SPIN_MOTOR.rotate(-90);
 		LeftDistance = IR_SENSOR.getDistance();
-		SPIN_MOTOR.rotate(90);
-		ForwardDistance = IR_SENSOR.getDistance();
-		SPIN_MOTOR.rotate(90);
+		SPIN_MOTOR.rotate(180);
 		RightDistance = IR_SENSOR.getDistance();
 		SPIN_MOTOR.rotate(-90);
 		
