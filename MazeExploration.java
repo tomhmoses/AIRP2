@@ -51,10 +51,9 @@ public class MazeExploration
 	public void exploreMaze(int delay) throws UnknownHostException, IOException
 	{
 		Deque<int[]> visitStack = new ArrayDeque<>();
-		Boolean stillToVisit = true;
 		Boolean[] walls;
 		visitStack.addFirst(new int[] {maze.explorer.x,maze.explorer.y});
-		while (stillToVisit) {
+		while (visitStack.size() != 0) {
 			if (withRobot) {
 				sendMaze();
 			}
@@ -81,51 +80,69 @@ public class MazeExploration
 			if (walls[3] != null) {
 				maze.setCurrentWall("W", walls[3]);
 			}
-			if (maze.getCurrentCell().getN() == false) {
-				if (maze.getNorthCell().getVisited() == false) {
-					if (maze.getNorthCell().type.equals("normal")) {
-						visitStack.addFirst(maze.getNorthCell().position);
-						maze.getNorthCell().type = "planned";
+			if (!maze.explorer.onDanger())
+			{
+				if (maze.getCurrentCell().getN() == false) {
+					if (maze.getNorthCell().getVisited() == false) {
+						if (maze.getNorthCell().type.equals("normal")) {
+							visitStack.addFirst(maze.getNorthCell().position);
+							maze.getNorthCell().type = "planned";
+						}
 					}
 				}
-			}
-			if (maze.getCurrentCell().getE() == false) {
-				if (maze.getEastCell().getVisited() == false) {
-					if (maze.getEastCell().type.equals("normal")) {
-						visitStack.addFirst(maze.getEastCell().position);
-						maze.getEastCell().type = "planned";
+				if (maze.getCurrentCell().getE() == false) {
+					if (maze.getEastCell().getVisited() == false) {
+						if (maze.getEastCell().type.equals("normal")) {
+							visitStack.addFirst(maze.getEastCell().position);
+							maze.getEastCell().type = "planned";
+						}
 					}
 				}
-			}
-			if (maze.getCurrentCell().getS() == false) {
-				if (maze.getSouthCell().getVisited() == false) {
-					if (maze.getSouthCell().type.equals("normal")) {
-						visitStack.addFirst(maze.getSouthCell().position);
-						maze.getSouthCell().type = "planned";
+				if (maze.getCurrentCell().getS() == false) {
+					if (maze.getSouthCell().getVisited() == false) {
+						if (maze.getSouthCell().type.equals("normal")) {
+							visitStack.addFirst(maze.getSouthCell().position);
+							maze.getSouthCell().type = "planned";
+						}
 					}
 				}
-			}
-			if (maze.getCurrentCell().getW() == false) {
-				if (maze.getWestCell().getVisited() == false) {
-					if (maze.getWestCell().type.equals("normal")) {
-						visitStack.addFirst(maze.getWestCell().position);
-						maze.getWestCell().type = "planned";
+				if (maze.getCurrentCell().getW() == false) {
+					if (maze.getWestCell().getVisited() == false) {
+						if (maze.getWestCell().type.equals("normal")) {
+							visitStack.addFirst(maze.getWestCell().position);
+							maze.getWestCell().type = "planned";
+						}
 					}
 				}
 			}
 			if (withRobot) {
 				sendMaze();
 			}
-			if (visitStack.size() == 0) {
-				stillToVisit = false;
-			}
 			if (maze.explorer.onDanger()) {
 				maze.getCurrentCell().type = "danger";
+				if (maze.explorer.lastDirection.equals("N")) {
+					maze.explorer.MoveSouth();
+				}
+				else if (maze.explorer.lastDirection.equals("E")) {
+					maze.explorer.MoveWest();
+				}
+				else if (maze.explorer.lastDirection.equals("S")) {
+					maze.explorer.MoveNorth();
+				}
+				else if (maze.explorer.lastDirection.equals("W")) {
+					maze.explorer.MoveEast();
+				}
+				if (withRobot) {
+					sendMaze();
+				}
 			}
 			else if (maze.explorer.reachedGoal()) {
 				maze.getCurrentCell().type = "goal";
 				goalCell = maze.getCurrentCell();
 				maze.explorer.out("Found Goal", 6);
+				if (withRobot) {
+					sendMaze();
+				}
 			}
 		}
 		
