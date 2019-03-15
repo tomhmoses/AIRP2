@@ -223,6 +223,11 @@ public class Juan implements RobotInterface
 	@Override
 	public Boolean[] getCurrentWalls()
 	{
+		//if we want to quit it.
+		if (buttons.getButtons() == Keys.ID_ESCAPE)
+		{
+			System.exit(0);
+		}
 		Double RightDistance = null;
 		Double ForwardDistance = null;
 		Double LeftDistance = null;
