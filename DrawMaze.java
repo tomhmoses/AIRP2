@@ -153,29 +153,33 @@ class MazeCanvas extends JPanel implements Runnable
 			int x1 = (int) Math.round((maze.explorer.x - 1 + 0.25)*cellWidth);
 			int y1 = (int) Math.round((maze.explorer.y - 1 + 0.25)*cellHeight);
 			g.fillOval(x1, y1, cellWidth/2, cellHeight/2);
-			//draw robot direction line
-			int x2 = (int) Math.round((maze.explorer.x - 1 + 0.5)*cellWidth);
-			int y2 = (int) Math.round((maze.explorer.y - 1 + 0.5)*cellHeight);
-			int x3 = 0;
-			int y3 = 0;
-			if (maze.explorer.lastDirection == "N") {
-				x3 = (int) Math.round((maze.explorer.x - 1 + 0.5)*cellWidth);
-				y3 = (int) Math.round((maze.explorer.y - 1 + 0.2)*cellHeight);
-			}
-			else if (maze.explorer.lastDirection == "E") {
-				x3 = (int) Math.round((maze.explorer.x - 1 + 0.8)*cellWidth);
-				y3 = (int) Math.round((maze.explorer.y - 1 + 0.5)*cellHeight);
-			}
-			else if (maze.explorer.lastDirection == "S") {
-				x3 = (int) Math.round((maze.explorer.x - 1 + 0.5)*cellWidth);
-				y3 = (int) Math.round((maze.explorer.y - 1 + 0.8)*cellHeight);
-			}
-			else if (maze.explorer.lastDirection == "W") {
-				x3 = (int) Math.round((maze.explorer.x - 1 + 0.2)*cellWidth);
-				y3 = (int) Math.round((maze.explorer.y - 1 + 0.5)*cellHeight);
-			}
 			
-			g.drawLine(x2,y2,x3,y3);
+			//draw robot direction line
+			if (maze.explorer.lastDirection != null) 
+			{
+				int x2 = (int) Math.round((maze.explorer.x - 1 + 0.5)*cellWidth);
+				int y2 = (int) Math.round((maze.explorer.y - 1 + 0.5)*cellHeight);
+				int x3 = 0;
+				int y3 = 0;
+				if (maze.explorer.lastDirection.equals("N")) {
+					x3 = (int) Math.round((maze.explorer.x - 1 + 0.5)*cellWidth);
+					y3 = (int) Math.round((maze.explorer.y - 1 + 0.2)*cellHeight);
+				}
+				else if (maze.explorer.lastDirection.equals("E")) {
+					x3 = (int) Math.round((maze.explorer.x - 1 + 0.8)*cellWidth);
+					y3 = (int) Math.round((maze.explorer.y - 1 + 0.5)*cellHeight);
+				}
+				else if (maze.explorer.lastDirection.equals("S")) {
+					x3 = (int) Math.round((maze.explorer.x - 1 + 0.5)*cellWidth);
+					y3 = (int) Math.round((maze.explorer.y - 1 + 0.8)*cellHeight);
+				}
+				else if (maze.explorer.lastDirection.equals("W")) {
+					x3 = (int) Math.round((maze.explorer.x - 1 + 0.2)*cellWidth);
+					y3 = (int) Math.round((maze.explorer.y - 1 + 0.5)*cellHeight);
+				}
+				
+				g.drawLine(x2,y2,x3,y3);
+			}
 			
 		}
 	}
@@ -194,7 +198,25 @@ class MazeCanvas extends JPanel implements Runnable
                 }
                 catch (ClassNotFoundException | IOException e)
                 {
+                	
                     e.printStackTrace();
+                    System.out.println("Finished!");
+                    
+                    for (int countdown = 20; countdown >= 0; countdown--)
+                    {
+                        System.out.println("Waiting "+countdown+" seconds before closing maze...");
+                    	try
+						{
+							Thread.sleep(1000);
+						}
+						catch (InterruptedException e1)
+						{
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+                    }
+                    System.out.println("completed.");
+                    System.exit(0);
                 }
             }
             this.repaint();
@@ -323,7 +345,7 @@ public class DrawMaze extends JFrame
 
 	public static void main(String[] a)
 	{
-		//RemoteMazeViewer();
-		HTMLMazeDemo();
+		RemoteMazeViewer();
+		//HTMLMazeDemo();
 	}
 }
