@@ -222,23 +222,26 @@ public class Maze implements Serializable
 		Graph graph = new SingleGraph("Maze Graph");
 		for (int x = 1; x <= this.width; x++) {
 			for (int y = 1; y <= this.height; y++) {
-				graph.addNode(layout[x][y].getCellPositionString());
-				if (layout[x][y].getN() != null) {
-					if (layout[x][y].getN() == false && !layout[x][y-1].type.equals("danger")) {
-						try {
-							graph.addEdge(layout[x][y].getCellPositionString() + "N", layout[x][y].getCellPositionString(), layout[x][y-1].getCellPositionString());
+				if (!layout[x][y].type.equals("danger"))
+				{
+					graph.addNode(layout[x][y].getCellPositionString());
+					if (layout[x][y].getN() != null) {
+						if (layout[x][y].getN() == false && !layout[x][y-1].type.equals("danger")) {
+							try {
+								graph.addEdge(layout[x][y].getCellPositionString() + "N", layout[x][y].getCellPositionString(), layout[x][y-1].getCellPositionString());
+							}
+							catch (Exception e)
+							{}
 						}
-						catch (Exception e)
-						{}
 					}
-				}
-				if (layout[x][y].getW() != null) {
-					if (layout[x][y].getW() == false && !layout[x-1][y].type.equals("danger")) {
-						try {
-							graph.addEdge(layout[x][y].getCellPositionString() + "W", layout[x][y].getCellPositionString(), layout[x-1][y].getCellPositionString());
+					if (layout[x][y].getW() != null) {
+						if (layout[x][y].getW() == false && !layout[x-1][y].type.equals("danger")) {
+							try {
+								graph.addEdge(layout[x][y].getCellPositionString() + "W", layout[x][y].getCellPositionString(), layout[x-1][y].getCellPositionString());
+							}
+							catch (Exception e)
+							{}
 						}
-						catch (Exception e)
-						{}
 					}
 				}
 			}
