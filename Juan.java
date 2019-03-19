@@ -102,7 +102,6 @@ public class Juan implements RobotInterface
 	
 	private void OneEighty() {
 		pilot.rotate((turnAmount*2)+5);
-		pilot.travel(-3);
 		pilot.travel(travelAmount);
 	}
 

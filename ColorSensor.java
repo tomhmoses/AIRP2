@@ -1,5 +1,6 @@
 import lejos.hardware.port.Port;
 import lejos.hardware.sensor.*;
+import lejos.hardware.lcd.LCD;
 
 public class ColorSensor extends EV3ColorSensor
 {
@@ -24,26 +25,27 @@ public class ColorSensor extends EV3ColorSensor
 		String colorName = "unknown";
 			
 		//set colour to white with following sensor restrictions
-		if (r > 30 && g > 30 && b > 30)
+		if (r > 22 && g > 17 && b > 22)
 		{
 			colorName = "white";
 		}
 		//set colour to green with following sensor restrictions
-		else if (r > 8 && g > 18 && b > 5)
+		else if (r > 4 && g > 13 && b > 5)
 		{
 			colorName = "green";
 		}
 		//set colour to black with following sensor restrictions
-		else if (r < 25 && g < 25 && b < 25)
+		/*else if (r < 25 && g < 25 && b < 25)
 		{
 			colorName = "black";
-		}
+		}*/
 		//set colour to red with following sensor restrictions
 		else if (r > 30 && g < 12 && b < 12)
 		{
 			colorName = "red";
 		}
-		
+		LCD.drawString(Integer.toString(r) + " " + Integer.toString(g) + " " + Integer.toString(b), 0, 6);
+		LCD.drawString(colorName, 0, 7);
 		//returns the colour name, if none of the colour apply - it will be "unknown"
 		return colorName;
 	}
