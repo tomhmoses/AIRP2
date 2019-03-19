@@ -22,8 +22,8 @@ public interface ExplorerInterface
 	
 	Boolean[] getCurrentWalls();
 
-	boolean reachedGoal();
+	Boolean reachedGoal();
 	
-	boolean onDanger();
+	Boolean onDanger();
 
 }

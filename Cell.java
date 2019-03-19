@@ -32,7 +32,7 @@ public class Cell implements CellInterface, Serializable
 	String type = "normal";
 	public int[] position;
 	
-	boolean visited;
+	Boolean visited;
 	
 	
 	public Cell(Cell NCell, Cell WCell, int[] position) {
@@ -52,11 +52,11 @@ public class Cell implements CellInterface, Serializable
 	}
 
 	
-	public boolean getVisited() {
+	public Boolean getVisited() {
 		return this.visited;
 	}
 	
-	public void setVisited(boolean value) {
+	public void setVisited(Boolean value) {
 		this.visited = value;
 		if (this.visited) {
 			this.type = "visited";

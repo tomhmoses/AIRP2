@@ -205,7 +205,7 @@ public class Juan implements RobotInterface
 	}
 
 	@Override
-	public boolean reachedGoal()
+	public Boolean reachedGoal()
 	{
 		return RIGHT_COLOR.onRed();
 	}
@@ -448,7 +448,7 @@ public class Juan implements RobotInterface
 
 
 	@Override
-	public boolean onDanger()
+	public Boolean onDanger()
 	{
 		return RIGHT_COLOR.onGreen();
 	}

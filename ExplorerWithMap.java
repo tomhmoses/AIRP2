@@ -47,11 +47,11 @@ public class ExplorerWithMap extends Explorer {
 		return walls;
 	}
 	
-	public boolean reachedGoal() {
+	public Boolean reachedGoal() {
 		return mapMaze.layout[this.x][this.y].type.equals("goal");
 	}
 	
-	public boolean onDanger() {
+	public Boolean onDanger() {
 		System.out.println("Type was: " + mapMaze.layout[this.x][this.y].type);
 		return mapMaze.layout[this.x][this.y].type.equals("danger");
 	}

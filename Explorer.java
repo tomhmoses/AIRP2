@@ -116,10 +116,10 @@ public class Explorer implements ExplorerInterface, Serializable
 	}
 
 	@Override
-	public boolean reachedGoal()
+	public Boolean reachedGoal()
 	{
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 
 	public void drawMazeOnLCD(Maze maze2)
@@ -129,10 +129,10 @@ public class Explorer implements ExplorerInterface, Serializable
 	}
 
 	@Override
-	public boolean onDanger()
+	public Boolean onDanger()
 	{
-		return false;
 		// TODO Auto-generated method stub
+		return null;
 	}
 
 

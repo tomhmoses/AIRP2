@@ -3,12 +3,12 @@ public interface CellInterface
 	/**
 	 * @return if the cell has been visited yet
 	 */
-	public boolean getVisited();
+	public Boolean getVisited();
 	
 	/**
 	 * Sets if the cell has been visited yet
 	 */
-	public void setVisited(boolean value);
+	public void setVisited(Boolean value);
 	
 	/**
 	 * @return the values of all of the walls surrounding the current cell

@@ -48,7 +48,7 @@ public class ColorSensor extends EV3ColorSensor
 		return colorName;
 	}
 
-	public boolean onBlack()
+	public Boolean onBlack()
 	{
 		//returns true if colour is black
 		String colorName = getColorName();
@@ -62,7 +62,7 @@ public class ColorSensor extends EV3ColorSensor
 		}
 	}
 
-	public boolean onWhite()
+	public Boolean onWhite()
 	{
 		//returns true if colour is white
 		String colorName = getColorName();
@@ -76,7 +76,7 @@ public class ColorSensor extends EV3ColorSensor
 		}
 	}
 
-	public boolean onGreen()
+	public Boolean onGreen()
 	{
 		//returns true if colour is green
 		String colorName = getColorName();
@@ -90,7 +90,7 @@ public class ColorSensor extends EV3ColorSensor
 		}
 	}
 
-	public boolean onRed()
+	public Boolean onRed()
 	{
 		//returns true if colour is red
 		String colorName = getColorName();
@@ -104,7 +104,7 @@ public class ColorSensor extends EV3ColorSensor
 		}
 	}
 
-	public boolean onYellow()
+	public Boolean onYellow()
 	{
 		//returns true if colour is yellow
 		String colorName = getColorName();
@@ -118,7 +118,7 @@ public class ColorSensor extends EV3ColorSensor
 		}
 	}
 
-	public boolean onBlue()
+	public Boolean onBlue()
 	{
 		//returns true if colour is blue
 		String colorName = getColorName();
@@ -132,7 +132,7 @@ public class ColorSensor extends EV3ColorSensor
 		}
 	}
 
-	public boolean knowsColor()
+	public Boolean knowsColor()
 	{
 		//returns true if colour is unknown
 		String colorName = getColorName();
