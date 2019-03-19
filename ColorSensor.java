@@ -29,7 +29,7 @@ public class ColorSensor extends EV3ColorSensor
 			colorName = "white";
 		}
 		//set colour to green with following sensor restrictions
-		else if (r < 12 && g > 12)
+		else if (r > 8 && g > 18 && b > 5)
 		{
 			colorName = "green";
 		}
