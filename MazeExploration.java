@@ -85,32 +85,44 @@ public class MazeExploration
 				if (maze.getCurrentCell().getN() == false) {
 					if (maze.getNorthCell().getVisited() == false) {
 						if (maze.getNorthCell().type.equals("normal")) {
-							visitStack.addFirst(maze.getNorthCell().position);
-							maze.getNorthCell().type = "planned";
+							try {
+								visitStack.addFirst(maze.getNorthCell().position);
+								maze.getNorthCell().type = "planned";
+							}
+							catch (Exception e) {}
 						}
 					}
 				}
 				if (maze.getCurrentCell().getE() == false) {
 					if (maze.getEastCell().getVisited() == false) {
 						if (maze.getEastCell().type.equals("normal")) {
-							visitStack.addFirst(maze.getEastCell().position);
-							maze.getEastCell().type = "planned";
+							try {
+								visitStack.addFirst(maze.getEastCell().position);
+								maze.getEastCell().type = "planned";
+							}
+							catch (Exception e) {}
 						}
 					}
 				}
 				if (maze.getCurrentCell().getS() == false) {
 					if (maze.getSouthCell().getVisited() == false) {
 						if (maze.getSouthCell().type.equals("normal")) {
-							visitStack.addFirst(maze.getSouthCell().position);
-							maze.getSouthCell().type = "planned";
+							try {
+								visitStack.addFirst(maze.getSouthCell().position);
+								maze.getSouthCell().type = "planned";
+							}
+							catch (Exception e) {}
 						}
 					}
 				}
 				if (maze.getCurrentCell().getW() == false) {
 					if (maze.getWestCell().getVisited() == false) {
 						if (maze.getWestCell().type.equals("normal")) {
-							visitStack.addFirst(maze.getWestCell().position);
+							try {
+								visitStack.addFirst(maze.getWestCell().position);
 							maze.getWestCell().type = "planned";
+							}
+							catch (Exception e) {}
 						}
 					}
 				}
