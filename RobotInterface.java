@@ -37,7 +37,7 @@ public interface RobotInterface
 	 * 
 	 * <p>i.e. using the <code>ColorSensor</code> to see if it is on a <b style="color:red;">red</b> tile.</p>
 	 */
-	Boolean reachedGoal();
+	boolean reachedGoal();
 
 	/**
 	 * @return the current walls in a boolean array in order <code>[N,E,S,W]</code>.
@@ -53,6 +53,6 @@ public interface RobotInterface
 	 * 
 	 * <p>i.e. using the <code>ColorSensor</code> to see if it is on a <b style="color:green;">green</b> tile.</p>
 	 */
-	Boolean onDanger();
+	boolean onDanger();
 
 }

@@ -81,8 +81,8 @@ public class Maze implements Serializable
 			createMazeLayout(width,height);
 			this.explorer = new ExplorerWithMap(1, this.height, this);
 			
-			Boolean S;
-			Boolean E;
+			boolean S;
+			boolean E;
 			for (int y = 0; y < height + 1; y++) {
 				String[] values = csvRows[y].split(",");
 				for (int x = 0; x < width + 1; x++) {
@@ -110,8 +110,8 @@ public class Maze implements Serializable
 			createMazeLayout(width,height);
 			this.explorer = new ExplorerWithMap(1, this.height, this);
 			
-			Boolean S;
-			Boolean E;
+			boolean S;
+			boolean E;
 			for (int y = 1; y < height + 1; y++) {
 				String[] values = htmlRows[y].split("cell");
 				for (int x = 1; x < width + 1; x++) {
@@ -179,7 +179,7 @@ public class Maze implements Serializable
 	/**
 	 * @param Direction - N, S, E or W
 	 */
-	public void setCurrentWall(String Direction, Boolean value) {
+	public void setCurrentWall(String Direction, boolean value) {
 		Cell cell = getCurrentCell();
 		switch (Direction.toUpperCase()) {
 			case "N":

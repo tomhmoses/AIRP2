@@ -108,7 +108,7 @@ class MazeCanvas extends JPanel implements Runnable
 			}
 		}
 		
-		Boolean drawLine = true;
+		boolean drawLine = true;
 		// draw each cell lines
 		for (int x = 0; x <= maze.width; x++) {
 			for (int y = 0; y <= maze.height; y++) {
@@ -345,7 +345,7 @@ public class DrawMaze extends JFrame
 
 	public static void main(String[] a)
 	{
-		RemoteMazeViewer();
-		//HTMLMazeDemo();
+		//RemoteMazeViewer();
+		HTMLMazeDemo();
 	}
 }

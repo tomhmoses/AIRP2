@@ -51,11 +51,11 @@ public class RobotExplorer extends Explorer
 	 * @see ExplorerInterface#reachedGoal()
 	 */
 	@Override
-	public Boolean reachedGoal() {
+	public boolean reachedGoal() {
 		return robot.reachedGoal();
 	}
 	
-	public Boolean onDanger() {
+	public boolean onDanger() {
 		return robot.onDanger();
 	}
 	

@@ -9,7 +9,7 @@ import org.graphstream.algorithm.AStar;
 public class MazeExploration
 {
 
-	private Boolean withRobot = false;
+	private boolean withRobot = false;
 	private Maze maze;
 	private Cell goalCell;
 	
